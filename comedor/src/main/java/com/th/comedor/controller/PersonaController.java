@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PersonaController {
     
-    @GetMapping(value = "/persona")
+    @GetMapping(value = "/personas")
     public String listarPersona(){
 
-        return "persona/persona";
+        return "persona/personas";
     }
 }
