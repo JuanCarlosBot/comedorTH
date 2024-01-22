@@ -41,7 +41,7 @@ public class Persona implements Serializable{
     private String estado;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividad", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
 	private List<Reserva> reserva;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

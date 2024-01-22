@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "persona")
+@Table(name = "seccion")
 @Getter
 @Setter
 
@@ -26,7 +26,7 @@ public class Seccion implements Serializable {
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_persona;
+    private Long id_seccion;
     @Column
     private String numero_seccion;
     @Column

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+
+<body>
+	<div th:fragment="content1">
+        <div  th:each="p:${persona}" >
+		    <span th:text="${p.nombre}" style="color: beige; font-size: 14px;">
+        </div>
+	</div>
+
+</body>
+
+</html>

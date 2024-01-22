@@ -1,11 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html lang="zxx" class="no-js">
+
+<head th:replace="~{layout/head :: head}">
 </head>
+
 <body>
-    <h1>hola mundo</h1>
+    <header th:replace="~{layout/menu :: menu}"></header><!-- #header -->
+
+    <!-- start banner Area -->
+    <section class="banner-area relative">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row fullscreen align-items-center justify-content-between">
+
+                <div class="col-lg-12 col-md-12 banner-right" style="margin-top: 5px;">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="flight-tab" data-toggle="tab" href="#personas" role="tab"
+                                aria-controls="flight" aria-selected="true">PERSONAS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="hotel-tab" data-toggle="tab" href="#hotel" role="tab"
+                                aria-controls="hotel" aria-selected="false">Hotels</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="holiday-tab" data-toggle="tab" href="#holiday" role="tab"
+                                aria-controls="holiday" aria-selected="false">Holidays</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content p-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="personas" role="tabpanel"
+                            aria-labelledby="flight-tab">
+                            <table id="example1" class="table table-striped table-bordered dt-responsive"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>CODIGO</th>
+                                        <th>CI</th>
+                                        <th>NOMBRE COMPLETO</th>
+                                        <th>SECCION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="font-size: 12px;" th:each="p, i:${personas}">
+                                        <td th:text="${i.index+1}"></td>
+                                        <td th:text="${p.codigo}"></td>
+                                        <td th:text="${p.ci}"></td>
+                                        <td th:text="${p.nombre}"></td>
+                                        <td th:text="${p.seccion.numero_seccion}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
+                            <form class="form-wrap">
+                                <input type="text" class="form-control" name="name" placeholder="From "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'From '">
+                                <input type="text" class="form-control" name="to" placeholder="To "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'To '">
+                                <input type="text" class="form-control date-picker" name="start" placeholder="Start "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start '">
+                                <input type="text" class="form-control date-picker" name="return" placeholder="Return "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return '">
+                                <input type="number" min="1" max="20" class="form-control" name="adults"
+                                    placeholder="Adults " onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Adults '">
+                                <input type="number" min="1" max="20" class="form-control" name="child"
+                                    placeholder="Child " onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Child '">
+                                <a href="#" class="primary-btn text-uppercase">Search Hotels</a>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="holiday" role="tabpanel" aria-labelledby="holiday-tab">
+                            <form class="form-wrap">
+                                <input type="text" class="form-control" name="name" placeholder="From "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'From '">
+                                <input type="text" class="form-control" name="to" placeholder="To "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'To '">
+                                <input type="text" class="form-control date-picker" name="start" placeholder="Start "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start '">
+                                <input type="text" class="form-control date-picker" name="return" placeholder="Return "
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return '">
+                                <input type="number" min="1" max="20" class="form-control" name="adults"
+                                    placeholder="Adults " onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Adults '">
+                                <input type="number" min="1" max="20" class="form-control" name="child"
+                                    placeholder="Child " onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Child '">
+                                <a href="#" class="primary-btn text-uppercase">Search Holidays</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- start footer Area -->
+    <div th:replace="~{layout/footer :: footer}"></div>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+                //, "colvis"
+            }).buttons().container().appendTo(
+                '#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo(
+                '#example2_wrapper .col-md-6:eq(0)');
+            $('#example3').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo(
+                '#example3_wrapper .col-md-6:eq(0)');
+        });
+    </script>
 </body>
+
 </html>

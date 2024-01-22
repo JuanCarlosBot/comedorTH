@@ -26,7 +26,7 @@ public class Subvension implements Serializable {
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_persona;
+    private Long id_subvension;
     @Column
     private String porcentaje;
     @Column
