@@ -15,4 +15,6 @@ public interface IPersonaService {
 	public void delete(Long id_persona);
 
 	public List<Persona> listaPersonasPorCi(String ci);
+
+	public List<Persona> listaPersonasPorCodigo(String codigo);
 }

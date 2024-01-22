@@ -39,5 +39,10 @@ public class PersonaServiceImpl implements IPersonaService {
     public List<Persona> listaPersonasPorCi(String ci) {
         return personaDao.listaPersonasPorCi(ci);
     }
+
+    @Override
+    public List<Persona> listaPersonasPorCodigo(String codigo) {
+        return personaDao.listaPersonasPorCi(codigo);
+    }
     
 }

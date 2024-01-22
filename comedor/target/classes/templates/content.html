@@ -6,11 +6,15 @@
 
 <body>
 	<div th:fragment="content1">
-        <div  th:each="p:${persona}" >
-		    <span th:text="${p.nombre}" style="color: beige; font-size: 14px;">
-        </div>
+        <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
+			<a href="#" th:text="${p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 14px;" onclick="abrirModal(this)"></a>
+		</div>
 	</div>
-
+	<div th:fragment="content2">
+        <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
+			<span th:text="${p.nombre}" style="color: beige; font-size: 14px;"></span>
+		</div>
+	</div>
 </body>
 
 </html>

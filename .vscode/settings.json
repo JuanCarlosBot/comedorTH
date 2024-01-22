@@ -1,5 +1,5 @@
 {
-    "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.10.7-hotspot",
+    //"java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.10.7-hotspot",
     "java.configuration.updateBuildConfiguration": "disabled",
     "java.compile.nullAnalysis.mode": "automatic"
     

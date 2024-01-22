@@ -11,4 +11,7 @@ public interface PersonaDao extends JpaRepository<Persona, Long>{
  
     @Query(value = "select * from persona p where p.ci ilike %?1%", nativeQuery = true)
     public List<Persona> listaPersonasPorCi(String ci);
+
+    @Query(value = "select * from persona p where p.codigo ilike %?1%", nativeQuery = true)
+    public List<Persona> listaPersonasPorCodigo(String codigo);
 }
