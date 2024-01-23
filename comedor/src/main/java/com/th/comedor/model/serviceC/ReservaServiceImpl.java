@@ -1,5 +1,6 @@
 package com.th.comedor.model.serviceC;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class ReservaServiceImpl implements IReservaService{
     @Override
     public void delete(Long id_reserva) {
         reservaDao.deleteById(id_reserva);
+    }
+
+    @Override
+    public List<Reserva> listaReservaPorDia(Date fecha) {
+        return reservaDao.listaReservaPorDia(fecha);
     }
     
 }

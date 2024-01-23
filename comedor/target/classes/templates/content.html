@@ -7,12 +7,12 @@
 <body>
 	<div th:fragment="content1">
         <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
-			<a href="#" th:text="${p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 14px;" onclick="abrirModal(this)"></a>
+			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;" onclick="abrirModal(this)"></a>
 		</div>
 	</div>
 	<div th:fragment="content2">
         <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
-			<span th:text="${p.nombre}" style="color: beige; font-size: 14px;"></span>
+			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;" onclick="abrirModal(this)"></a>
 		</div>
 	</div>
 </body>

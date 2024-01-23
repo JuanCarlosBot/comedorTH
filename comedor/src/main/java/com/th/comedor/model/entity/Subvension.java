@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "sobvension")
+@Table(name = "subvension")
 @Getter
 @Setter
 public class Subvension implements Serializable {
@@ -31,6 +31,8 @@ public class Subvension implements Serializable {
     private String porcentaje;
     @Column
     private String monto;
+    @Column
+    private String total;
     @Column
     private String estado;
 

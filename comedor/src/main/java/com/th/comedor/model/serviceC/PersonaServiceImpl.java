@@ -42,7 +42,7 @@ public class PersonaServiceImpl implements IPersonaService {
 
     @Override
     public List<Persona> listaPersonasPorCodigo(String codigo) {
-        return personaDao.listaPersonasPorCi(codigo);
+        return personaDao.listaPersonasPorCodigo(codigo);
     }
     
 }

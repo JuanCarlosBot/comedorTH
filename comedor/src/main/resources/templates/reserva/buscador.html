@@ -23,24 +23,33 @@
     <link rel="stylesheet" href="css/set1.css">
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .form-check-inline {
-        margin-bottom: 10px; /* Añade margen inferior para separar los form-check-inline */
-    }
+            margin-bottom: 10px;
+            /* Añade margen inferior para separar los form-check-inline */
+        }
 
-    .form-check-input {
-        width: 1em; /* Ancho deseado */
-        height: 1em; /* Altura deseada */
-        border-radius: 50%; /* Hace que las esquinas sean redondeadas, creando una forma curva */
-        border-bottom: 1px solid #ccc; /* Añade un borde inferior de 1 píxel sólido con color gris claro */
-        margin-bottom: -1px; /* Compensa el borde inferior para evitar doble línea en la separación */
-    }
+        .form-check-input {
+            width: 1em;
+            /* Ancho deseado */
+            height: 1em;
+            /* Altura deseada */
+            border-radius: 50%;
+            /* Hace que las esquinas sean redondeadas, creando una forma curva */
+            border-bottom: 1px solid #ccc;
+            /* Añade un borde inferior de 1 píxel sólido con color gris claro */
+            margin-bottom: -1px;
+            /* Compensa el borde inferior para evitar doble línea en la separación */
+        }
 
-    .form-check-label {
-        margin-left: 5px; /* Ajusta el margen izquierdo para acercar el label al checkbox */
-    }
+        .form-check-label {
+            margin-left: 5px;
+            /* Ajusta el margen izquierdo para acercar el label al checkbox */
+        }
     </style>
 </head>
 
@@ -124,11 +133,25 @@
                         </div>
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-10">
-                                <input type="text" placeholder="CODIGO PERSONA" class="btn-group1" id="textoCodigo" onkeyup="buscarPersonaCodigo()">
-                                <input class="btn-group1" type="text" placeholder="CEDULA DE IDENTIDAD" id="texto" onkeyup="buscarPersonaCi()">
-                                <div class="slider-link" id="replace_div">Aqui se mostraran tus datos</div>
+                                <input type="text" placeholder="CODIGO PERSONA" class="btn-group1" id="textoCodigo"
+                                    onkeyup="buscarPersonaCodigo()">
+                                <input class="btn-group1" type="text" placeholder="CEDULA DE IDENTIDAD" id="texto"
+                                    onkeyup="buscarPersonaCi()">
+                                <div class="slider-link" id="replace_div"> <h2>Aqui se mostraran tus datos</h2> </div>
+                                </br></br>
+                                <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                                            role="alert" th:if="${mensaje != null}">
+                                            <h4 class="alert-body" th:inline="text">
+                                                <strong th:text="${nombre}"></strong>
+                                                [[${mensaje}]]
+                                            </h4>
+                                            <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>-->
+                                        </div>
 
                                 <script>
+                                    
                                     function buscarPersonaCi() {
                                         getContent();
                                         $('#texto').change(getContent);
@@ -148,10 +171,10 @@
                                     function abrirModal(enlace) {
                                         var idPersona = enlace.getAttribute("data-id");
                                         var nombrePersona = enlace.getAttribute("data-nombre");
-                                        
+
                                         document.getElementById("personaId").value = idPersona;
                                         document.getElementById("personaNombre").innerText = nombrePersona;
-                                
+
                                         $('#myModal').modal('show');
                                     }
                                 </script>
@@ -159,7 +182,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <form th:action="@{/guardarReserva}" method="post">
@@ -177,12 +201,15 @@
                                     <div class="form-group" style="font-size: 20px;">
                                         <label class="col-form-label">Fechas de la semana actual:</label></br>
                                         <div class="checkbox-container">
-                                            <div th:each="fsa : ${fechasSemanaActual}" class="form-check form-check-inline" style="text-align: center;">
-                                                
-                                                    <input type="checkbox" th:value="${fsa.id_dia}" class="form-check-input" name="id_dias">
-                                                    <label th:for="${'checkbox' + fsa.id_dia}" class="form-check-label" th:text="${fsa.fechaFormateada}"></label>
-                                                
-                                                
+                                            <div th:each="fsa : ${fechasSemanaActual}"
+                                                class="form-check form-check-inline" style="text-align: center;">
+
+                                                <input type="checkbox" th:value="${fsa.id_dia}" class="form-check-input"
+                                                    name="id_dias">
+                                                <label th:for="${'checkbox' + fsa.id_dia}" class="form-check-label"
+                                                    th:text="${fsa.fechaFormateada}"></label>
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </section>
@@ -226,7 +253,6 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
     <script>
         $(window).scroll(function () {
             // 100 = The point you would like to fade the nav in.

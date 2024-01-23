@@ -1,5 +1,6 @@
 package com.th.comedor.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,11 +15,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.th.comedor.model.entity.Dias;
+import com.th.comedor.model.entity.Persona;
+import com.th.comedor.model.entity.Reserva;
+import com.th.comedor.model.entity.Subvension;
 import com.th.comedor.model.serviceI.IDiasService;
 import com.th.comedor.model.serviceI.IPersonaService;
+import com.th.comedor.model.serviceI.IReservaService;
+import com.th.comedor.model.serviceI.ISubvensionService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -29,6 +37,10 @@ public class ReservaController {
     private IPersonaService personaService;
     @Autowired
     private IDiasService diasService;
+    @Autowired
+    private ISubvensionService subvensionService;
+    @Autowired
+    private IReservaService reservaService; 
 
     @GetMapping("/buscador")
     public String buscador(Model model) {
@@ -68,17 +80,50 @@ public class ReservaController {
     }
 
     @PostMapping("/guardarReserva")
-    public String guardarReserva(@RequestParam(value = "id_persona")Long id_persona, @RequestParam(value = "id_dias")Long[] id_dias) {
+    public String guardarReserva(RedirectAttributes redirectAttributes, @RequestParam(value = "id_persona")Long id_persona, @RequestParam(value = "id_dias")Long[] id_dias) {
+        Persona persona = personaService.findOne(id_persona);
+        Subvension subvension = subvensionService.findOne(1l);
         List<Dias> diasSemana=new ArrayList<>();
         for (Long long1 : id_dias) {
             Dias dias = diasService.findOne(long1);
             diasSemana.add(dias);
         }
         for (Dias dias : diasSemana) {
+            Reserva reserva = new Reserva();
+            reserva.setFecha_reserva(new Date());
+            reserva.setEstado_reserva("A");
+            reserva.setPersona(persona);
+            reserva.setSubvension(subvension);
+            reserva.setDias(dias);
+            reservaService.save(reserva);
             System.out.println("fechas seleccionadas  "+dias.getFecha());
         }
         
+        redirectAttributes.addFlashAttribute("nombre", persona.getNombre());
+        redirectAttributes.addFlashAttribute("mensaje", "Tu reserva fue completada con éxito");
         return "redirect:/buscador";
+    }
+
+    @GetMapping("/reservasHoy")
+    public String reservasHoy(Model model){
+        
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada = sdf.format(new Date());
+
+        try {
+            
+            Date fechaActualFormateada = sdf.parse(fechaFormateada);
+            // Ahora, fechaActualFormateada contiene la fecha actual en formato Date
+            System.out.println("Fecha actual formateada: " + fechaActualFormateada);
+            List<Reserva> listaReservasHoy = reservaService.listaReservaPorDia(fechaActualFormateada);
+            model.addAttribute("reservasHoy", listaReservasHoy);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        
+        return "reserva/reserva";
     }
     
 }
