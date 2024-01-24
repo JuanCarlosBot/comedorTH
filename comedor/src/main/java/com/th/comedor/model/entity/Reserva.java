@@ -45,4 +45,10 @@ public class Reserva implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_dias")
     private Dias dias;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_estado")
+    private Estados estados;
+
 }
