@@ -1,223 +1,125 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased">
+<html lang="es">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>TAHUAMANU S.A. </title>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" rel=" stylesheet">
-	<!--Replace with your tailwind.css once created-->
-
-
-	<!--Regular Datatables CSS-->
-	<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-	<!--Responsive Extension Datatables CSS-->
-	<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TAHUAMANU S.A. </title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-	<style>
-		/*Overrides for Tailwind CSS */
-        .p-8 {
-        padding: 2rem; /* Ajusta según tus necesidades */
-    }
-		/*Form fields*/
-		.dataTables_wrapper select,
-		.dataTables_wrapper .dataTables_filter input {
-			color: #4a5568;
-			/*text-gray-700*/
-			padding-left: 1rem;
-			/*pl-4*/
-			padding-right: 1rem;
-			/*pl-4*/
-			padding-top: .5rem;
-			/*pl-2*/
-			padding-bottom: .5rem;
-			/*pl-2*/
-			line-height: 1.25;
-			/*leading-tight*/
-			border-width: 2px;
-			/*border-2*/
-			border-radius: .25rem;
-			border-color: #edf2f7;
-			/*border-gray-200*/
-			background-color: #edf2f7;
-			/*bg-gray-200*/
-		}
-
-		/*Row Hover*/
-		table.dataTable.hover tbody tr:hover,
-		table.dataTable.display tbody tr:hover {
-			background-color: #ebf4ff;
-			/*bg-indigo-100*/
-		}
-
-		/*Pagination Buttons*/
-		.dataTables_wrapper .dataTables_paginate .paginate_button {
-			font-weight: 700;
-			/*font-bold*/
-			border-radius: .25rem;
-			/*rounded*/
-			border: 1px solid transparent;
-			/*border border-transparent*/
-		}
-
-		/*Pagination Buttons - Current selected */
-		.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-			color: #fff !important;
-			/*text-white*/
-			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-			/*shadow*/
-			font-weight: 700;
-			/*font-bold*/
-			border-radius: .25rem;
-			/*rounded*/
-			background: #667eea !important;
-			/*bg-indigo-500*/
-			border: 1px solid transparent;
-			/*border border-transparent*/
-		}
-
-		/*Pagination Buttons - Hover */
-		.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-			color: #fff !important;
-			/*text-white*/
-			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-			/*shadow*/
-			font-weight: 700;
-			/*font-bold*/
-			border-radius: .25rem;
-			/*rounded*/
-			background: #667eea !important;
-			/*bg-indigo-500*/
-			border: 1px solid transparent;
-			/*border border-transparent*/
-		}
-
-		/*Add padding to bottom border */
-		table.dataTable.no-footer {
-			border-bottom: 1px solid #e2e8f0;
-			/*border-b-1 border-gray-300*/
-			margin-top: 0.75em;
-			margin-bottom: 0.75em;
-		}
-
-		/*Change colour of responsive icon*/
-		table.dataTable.dtr-inline.collapsed>tbody>tr>td:first-child:before,
-		table.dataTable.dtr-inline.collapsed>tbody>tr>th:first-child:before {
-			background-color: #667eea !important;
-			/*bg-indigo-500*/
-		}
-	</style>
-
-
-
+    <!-- Estilos de DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        /* Estilos personalizados van aquí */
+    </style>
 </head>
 
-<body class="bg-gray-100 text-gray-900 tracking-wider leading-normal">
-    
-    
-    
+<body class="bg-light text-dark tracking-wider leading-normal">
 
-	<!--Container-->
-	<div class="container mx-auto"><!--container w-full md:w-4/5 xl:w-3/5  mx-auto px-2-->
+    <!-- Contenedor principal -->
+    <div class="container-fluid">
 
-		<!--Title-->
-		<div style="text-align: center;">
-            <h1 class="flex items-center font-sans font-bold break-normal text-indigo-500 px-2 py-8 text-xl md:text-2xl">
-			COMEDOR TAHUAMANU S.A.
+        <!-- Título -->
+        <div class="mt-4" style="text-align: center;">
+            <h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl" style="color: rgb(14, 129, 47);">
+                TAHUAMANU S.A.
             </h1>
         </div>
-        <div class="row" style="width: 100%;">
-            <div class="col-md-3">
-                    <div>
-                        <h2><a href="javascript:location.reload()">Actualizar</a></h2>
-                    </div>
-                    <div class="row" style="color: rgb(33, 145, 66); font-size: 20px;">
-                        <strong style="font-size: 50px;">200</strong>
-                        <label class="label">PENDIENTE:</label>
-                    </div>
-                    <div class="row" style="color: rgb(199, 128, 35); font-size: 20px;">
-                        <strong style="font-size: 50px;">120</strong>
-                        <label class="label">ALMORAZADO:</label>
-                    </div>
-                    <div class="row" style="color: rgb(31, 71, 204); font-size: 20px;">
-                        <strong style="font-size: 50px;">320</strong>
-                        <label class="label">TOTAL:</label>
-                    </div>
-            </div>
-            <!--Card-->
-            <div class="col-md-9 mx-auto" >
-                <div id='recipients' class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
-                    <table id="example" class="stripe hover" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                        <thead>
-                            <tr>
-                                <th data-priority="1">#</th>
-                                <th data-priority="3">CODIGO</th>
-                                <th data-priority="4">CI</th>
-                                <th data-priority="5">NOMBRE COMPLETO</th>
-                                <th data-priority="6">ESTADO</th>
-                                <th data-priority="7">SECCION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="text-align: center;" th:each="r, i:${reservasHoy}">
-                                <td th:text="${i.index+1}"></td>
-                                <td th:text="${r.persona.codigo}"></td>
-                                <td th:text="${r.persona.ci}"></td>
-                                <td>
-                                    <th:block th:if="${r.estados.id_estado==1}">
-                                        <button type="button" class="btn btn-primary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}" onclick="abrirModal(this)">
-                                            <strong th:text="${r.persona.nombre}"></strong>
-                                        </button>    
-                                    </th:block>
-                                    <th:block th:if="${r.estados.id_estado==2}">
-                                        <button type="button" class="btn btn-secondary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}">
-                                            <strong th:text="${r.persona.nombre}"></strong>
-                                        </button>    
-                                    </th:block>
-                                </td>
-                                <td>
-                                    <th:block th:if="${r.estados.id_estado==1}"><button type="button" class="btn btn-success" th:text="${r.estados.nombre_estado}"></button></th:block>
-                                    <th:block th:if="${r.estados.id_estado==2}"><button type="button" class="btn btn-danger" th:text="${r.estados.nombre_estado}"></button></th:block>
-                                </td>
-                                <td th:text="${r.persona.seccion.numero_seccion}"></td>
-                            </tr>
-                        </tbody>
 
-                    </table>
+        <!-- Filas -->
+        <div class="row mx-2 mt-4">
 
+			<!-- Div central de 3 columnas para los números -->
+			<div class="col-md-3 mx-auto text-center d-flex flex-column">
+				<!-- Contenido de los números -->
+				<div class="mt-4">
+					<h2><a href="javascript:location.reload()">Actualizar</a></h2>
+				</div>
+				<div class="row mt-4" style="color: rgb(33, 145, 66); font-size: 20px;">
+					<div class="col-md-12"><strong style="font-size: 50px;">200</strong></div>
+					<div class="col-md-12"><label class="label">PENDIENTE:</label></div>
+				</div>
+				<div class="row mt-4" style="color: rgb(199, 128, 35); font-size: 20px;">
+					<div class="col-md-12"><strong style="font-size: 50px;">100</strong></div>
+					<div class="col-md-12"><label class="label">ALMORAZADO:</label></div>
+				</div>
+				<div class="row mt-4" style="color: rgb(31, 71, 204); font-size: 20px;">
+					<div class="col-md-12"><strong style="font-size: 50px;">300</strong></div>
+					<div class="col-md-12"><label class="label">TOTAL:</label></div>
+				</div>
+			</div>
+		
+			<!-- Div más amplio de 9 columnas para la tabla -->
+			<div class="col-md-9 mx-auto">
+				<!-- Contenido de la tabla -->
+				<div id='recipients' class="p-4 mt-6 lg:mt-0 rounded shadow bg-white">
+					<table id="example" class="stripe hover" style="width:100%;">
+						<thead>
+							<tr>
+								<th data-priority="1">#</th>
+								<th data-priority="3">CODIGO</th>
+								<th data-priority="4">CI</th>
+								<th data-priority="5">NOMBRE COMPLETO</th>
+								<th data-priority="6">ESTADO</th>
+								<th data-priority="7">SECCION</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr style="text-align: center;" th:each="r, i:${reservasHoy}">
+								<td th:text="${i.index+1}"></td>
+								<td th:text="${r.persona.codigo}"></td>
+								<td th:text="${r.persona.ci}"></td>
+								<td>
+									<th:block th:if="${r.estados.id_estado==1}">
+										<button type="button" class="btn btn-primary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}" onclick="abrirModal(this)">
+											<strong th:text="${r.persona.nombre}"></strong>
+										</button>    
+									</th:block>
+									<th:block th:if="${r.estados.id_estado==2}">
+										<button type="button" class="btn btn-secondary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}">
+											<strong th:text="${r.persona.nombre}"></strong>
+										</button>    
+									</th:block>
+								</td>
+								<td>
+									<th:block th:if="${r.estados.id_estado==1}">
+										<button type="button" class="btn btn-success" th:text="${r.estados.nombre_estado}"></button>
+									</th:block>
+									<th:block th:if="${r.estados.id_estado==2}">
+										<button type="button" class="btn btn-danger" th:text="${r.estados.nombre_estado}"></button>
+									</th:block>
+								</td>
+								<td th:text="${r.persona.seccion.numero_seccion}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		
+		</div>
+        <!-- /Filas -->
 
-                </div>
-            </div>
-            <!--/Card-->
-        </div>
+    </div>
+    <!-- /Contenedor principal -->
 
-	</div>
-	<!--/container-->
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <!-- Scripts de DataTables -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-	<!-- jQuery -->
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-	<!--Datatables -->
-	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-	<script>
-		$(document).ready(function() {
-
-			var table = $('#example').DataTable({
-					responsive: true
-				})
-				.columns.adjust()
-				.responsive.recalc();
-		});
-	</script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                responsive: true
+            }).columns.adjust().responsive.recalc();
+        });
+    </script>
 
 </body>
 
