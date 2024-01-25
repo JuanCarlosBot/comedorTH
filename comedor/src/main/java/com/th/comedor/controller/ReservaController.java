@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -15,15 +17,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.th.comedor.model.entity.Dias;
+import com.th.comedor.model.entity.Estados;
 import com.th.comedor.model.entity.Persona;
 import com.th.comedor.model.entity.Reserva;
 import com.th.comedor.model.entity.Subvension;
 import com.th.comedor.model.entity.TipoReserva;
 import com.th.comedor.model.serviceI.IDiasService;
+import com.th.comedor.model.serviceI.IEstadoService;
 import com.th.comedor.model.serviceI.IPersonaService;
 import com.th.comedor.model.serviceI.IReservaService;
 import com.th.comedor.model.serviceI.ISubvensionService;
 import com.th.comedor.model.serviceI.ITipoReservaService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,9 +50,24 @@ public class ReservaController {
     private IReservaService reservaService; 
     @Autowired
     private ITipoReservaService tipoReservaService;
+    @Autowired
+    private IEstadoService estadoService;
 
-    @GetMapping("/buscador")
-    public String buscador(Model model) {
+    @GetMapping("/seleccionBuscador")
+    public String seleccionBuscador(Model model){
+        List<TipoReserva> tipoReservas = tipoReservaService.findAll();
+        Collections.sort(tipoReservas, Comparator.comparingLong(TipoReserva::getId_tipo_reserva));
+        model.addAttribute("tipoReservas", tipoReservas);
+        return "reserva/seleccion_buscador";
+    }
+
+    @GetMapping("/buscadorPersona")
+    public String buscadorPersona(Model model, HttpServletRequest request) {
+        String idTipoReserva = request.getParameter("idTipoReserva");
+        Long id_tipo = Long.parseLong(idTipoReserva);
+        
+        TipoReserva tipoReserva = tipoReservaService.findOne(id_tipo);
+        System.out.println(idTipoReserva+" "+tipoReserva.getNombre_tipo_reserva());
         List<Dias> fechasSemanaActual = obtenerFechasSemanaActual();
         
         SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MMM");
@@ -54,6 +75,7 @@ public class ReservaController {
             dia.setFechaFormateada(sdf.format(dia.getFecha()));
         }
         model.addAttribute("fechasSemanaActual", fechasSemanaActual);
+        model.addAttribute("tipoReserva", tipoReserva);
         return "reserva/buscador";
     }
 
@@ -83,8 +105,17 @@ public class ReservaController {
     }
 
     @PostMapping("/guardarReserva")
-    public String guardarReserva(RedirectAttributes redirectAttributes, @RequestParam(value = "id_persona")Long id_persona, @RequestParam(value = "id_dias")Long[] id_dias) {
+    public String guardarReserva(RedirectAttributes redirectAttributes, 
+    @RequestParam(value = "id_persona")Long id_persona, 
+    @RequestParam(value = "id_tiporeserva")Long id_tiporeserva,
+    @RequestParam(value = "id_dias")Long[] id_dias, Model model) {
+
+        TipoReserva tipoReserva = tipoReservaService.findOne(id_tiporeserva);
         Persona persona = personaService.findOne(id_persona);
+        Estados estados = estadoService.findOne(1l);
+
+
+        System.out.println(tipoReserva.getNombre_tipo_reserva()+" "+persona.getNombre());
         Subvension subvension = subvensionService.findOne(1l);
         List<Dias> diasSemana=new ArrayList<>();
         for (Long long1 : id_dias) {
@@ -98,35 +129,39 @@ public class ReservaController {
             reserva.setPersona(persona);
             reserva.setSubvension(subvension);
             reserva.setDias(dias);
+            reserva.setEstados(estados);
+            reserva.setTipo_reserva(tipoReserva);
             reservaService.save(reserva);
+
             System.out.println("fechas seleccionadas  "+dias.getFecha());
         }
-        
+        redirectAttributes.addFlashAttribute("tipoReserva", tipoReserva);
         redirectAttributes.addFlashAttribute("nombre", persona.getNombre());
         redirectAttributes.addFlashAttribute("mensaje", "Tu reserva fue completada con éxito");
-        return "redirect:/buscador";
+        return "redirect:/buscadorPersona?idTipoReserva=" + id_tiporeserva;
     }
 
     @GetMapping("/seleccionReserva")
     public String seleccionReserva(Model model){
         List<TipoReserva> tipoReservas = tipoReservaService.findAll();
+        Collections.sort(tipoReservas, Comparator.comparingLong(TipoReserva::getId_tipo_reserva));
         model.addAttribute("tipoReservas", tipoReservas);
         return "reserva/seleccion_reserva";
     }
 
-    @GetMapping("/reservasHoy")
-    public String reservasHoy(Model model){
-        
+    @GetMapping("/reservasHoy/{idTipoReserva}")
+    public String reservasHoy(@PathVariable Long idTipoReserva, Model model){
+        TipoReserva tipoReserva = tipoReservaService.findOne(idTipoReserva);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaFormateada = sdf.format(new Date());
 
         try {
-            
             Date fechaActualFormateada = sdf.parse(fechaFormateada);
             // Ahora, fechaActualFormateada contiene la fecha actual en formato Date
             System.out.println("Fecha actual formateada: " + fechaActualFormateada);
             List<Reserva> listaReservasHoy = reservaService.listaReservaPorDia(fechaActualFormateada);
+            model.addAttribute("tipoReserva", tipoReserva);
             model.addAttribute("reservasHoy", listaReservasHoy);
 
         } catch (ParseException e) {

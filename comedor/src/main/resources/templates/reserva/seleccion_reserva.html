@@ -1,62 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Cards Custom</title>
-	 <link href="https://fonts.googleapis.com/css?family=roboto" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    
-    
-	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/estilos.css">
+    <meta charset="UTF-8">
+    <title>TAHUAMANU S.A.</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <style>
         .prin {
-            background-image: url(../images/sliderr.jpg); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+            background-image: url(../images/carro.jpg); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            min-height: 100vh;
+            min-height: 90vh;
             color: white; /* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
         }
     </style>
 </head>
 <body class="prin">
-	<div class="container principal">
-		<div class="row">
-			<div class="col-lg-12 text-center">
-                <div>
-                    <h1>TAHUAMANU S.A.</h1>
-                
-                </div>
-                </br></br>
-	            <div class="row">
-                    <!--tarjeta 1-->
-                    <th:block th:each="tp:${tipoReservas}">
-                        <div class="col-lg-4 col-md-12 mb-4">
-                            <div class="card-section border rounded ml-4 mr-4">
-                               <div class="card-header card-header-second rounded">
-                                   <h2 class="card-header-title text-white pt-3" th:text="${tp.nombre_tipo_reserva}"></h2>
-                               </div>
-                               <div class="card-body text-center">
-                                    <th:block th:if="${tp.id_tipo_reserva==1}">
-                                        <p class="card-text">DESAYUNO TAHUAMANU</p>
-                                    </th:block>
-                                    <th:block th:if="${tp.id_tipo_reserva==2}">
-                                        <p class="card-text">ALMUERZO TAHUAMANU</p>
-                                    </th:block>
-                                    <th:block th:if="${tp.id_tipo_reserva==3}">
-                                        <p class="card-text">CENA TAHUAMANU</p>
-                                    </th:block>
-                                   <br>    
-                                   <button class="btn btn-lg btn-secondary">INGRESAR</button>
-                               </div>
-                           </div>
-                       </div>
+    <div style="text-align: center; margin-top: 60px;">
+        <h1 style="color: rgb(255, 255, 255); font-size: 50px;"><strong>SISTEMA DE RESERVA DE COMEDOR TAHUAMANU S.A.</strong></h1>
+    </div>
+    <div class="container" style="margin-top: 40px;">
+        <th:block th:each="tr:${tipoReservas}">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card">
+                    <th:block th:if="${tr.id_tipo_reserva==1}">
+                        <img src="../images/img1.jpg">
                     </th:block>
-	                
-	            </div>
-			</div>
-		</div>
-	</div>
+                    <th:block th:if="${tr.id_tipo_reserva==2}">
+                        <img src="../images/img2.jpg">
+                    </th:block>
+                    <th:block th:if="${tr.id_tipo_reserva==3}">
+                        <img src="../images/img3.jpg">
+                    </th:block>
+                    <h4 th:text="${tr.id_tipo_reserva+'. '+tr.nombre_tipo_reserva}"  style="color: black;">Naturaleza</h4>
+                    <th:block th:if="${tr.id_tipo_reserva==1}">
+                        <p style="color: black;">Desayuno subvensionado por la empresa Tahuamanu S.A.</p>
+                    </th:block>
+                    <th:block th:if="${tr.id_tipo_reserva==2}">
+                        <p style="color: black;">Almuerzo subvensionado al 50% por la empresa Tahuamanu S.A.</p>
+                    </th:block>
+                    <th:block th:if="${tr.id_tipo_reserva==3}">
+                        <p style="color: black;">Cena subvensionado al 50% por la empresa Tahuamanu S.A.</p>
+                    </th:block>
+                    <a class="btn btn-primary btn-lg" th:href="@{'/reservasHoy/' + ${tr.id_tipo_reserva}}" style="color: azure;">Ingresar</a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+    
 </body>
 </html>

@@ -13,19 +13,27 @@
     <!-- Estilos de DataTables CSS -->
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
+		.prin {
+            background-image: url(../images/sliderr.jpg); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            color: white; /* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
+        }
         /* Estilos personalizados van aquí */
     </style>
 </head>
 
-<body class="bg-light text-dark tracking-wider leading-normal">
+<body class="bg-light text-dark tracking-wider leading-normal prin">
 
     <!-- Contenedor principal -->
     <div class="container-fluid">
 
         <!-- Título -->
-        <div class="mt-4" style="text-align: center;">
+        <div class="mt-4" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
             <h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl" style="color: rgb(14, 129, 47);">
-                TAHUAMANU S.A.
+                TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
             </h1>
         </div>
 
@@ -33,22 +41,25 @@
         <div class="row mx-2 mt-4">
 
 			<!-- Div central de 3 columnas para los números -->
-			<div class="col-md-3 mx-auto text-center d-flex flex-column">
+			<div class="col-md-3 mx-auto text-center d-flex flex-column" style="background-color: rgba(238, 241, 240, 0.89); border-radius: 2%;">
 				<!-- Contenido de los números -->
 				<div class="mt-4">
 					<h2><a href="javascript:location.reload()">Actualizar</a></h2>
 				</div>
-				<div class="row mt-4" style="color: rgb(33, 145, 66); font-size: 20px;">
+				<div class="row mt-4" style="color: rgb(14, 88, 36); font-size: 20px;">
 					<div class="col-md-12"><strong style="font-size: 50px;">200</strong></div>
 					<div class="col-md-12"><label class="label">PENDIENTE:</label></div>
 				</div>
-				<div class="row mt-4" style="color: rgb(199, 128, 35); font-size: 20px;">
+				<div class="row mt-4" style="color: rgb(112, 72, 20); font-size: 20px;">
 					<div class="col-md-12"><strong style="font-size: 50px;">100</strong></div>
 					<div class="col-md-12"><label class="label">ALMORAZADO:</label></div>
 				</div>
-				<div class="row mt-4" style="color: rgb(31, 71, 204); font-size: 20px;">
+				<div class="row mt-4" style="color: rgb(16, 49, 158); font-size: 20px;">
 					<div class="col-md-12"><strong style="font-size: 50px;">300</strong></div>
 					<div class="col-md-12"><label class="label">TOTAL:</label></div>
+				</div></br>
+				<div class="mt-4">
+					<h2><a th:href="@{/seleccionReserva}">Atras</a></h2>
 				</div>
 			</div>
 		
@@ -112,6 +123,9 @@
     <!-- Scripts de DataTables -->
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
 
     <script>
         $(document).ready(function() {

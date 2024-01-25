@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TAHUAMANU S.A. </title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Estilos de DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+		.prin {
+            background-image: url(../images/sliderr.jpg); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            color: white; /* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
+        }
+        /* Estilos personalizados van aquí */
+        .menu-principal {
+      background-color: #118a39dc;
+      padding: 10px;
+    }
+    
+    .menu-principal ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .menu-principal li {
+      display: inline;
+    }
+    
+    .menu-principal a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+    }
+    
+    .menu-principal a:hover {
+      background-color: #118a39dc;
+    }
+    </style>
+</head>
+
+<body class="bg-light text-dark tracking-wider leading-normal prin">
+
+    <nav class="menu-principal" id="navegacion" aria-label="Menú principal">
+        <ul>
+          <li><a th:href="@{/seleccionBuscador}">Entrada</a></li>
+          <li><a th:href="@{/seleccionReserva}">Comedor</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    <div class="container-fluid">
+        <div class="card" style="height: 93vh;">
+            <div class="mt-4" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
+                <h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl" style="color: rgb(14, 129, 47);">
+                    TAHUAMANU S.A.
+                </h1>
+            </div>
+    
+            <div class="row mx-2 mt-4">
+    
+                
+                <div class="mx-auto">
+                    <div id='recipients' class="p-4 mt-6 lg:mt-0 rounded shadow bg-white">
+                        contenido
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                responsive: true
+            }).columns.adjust().responsive.recalc();
+        });
+    </script>
+
+</body>
+
+</html>

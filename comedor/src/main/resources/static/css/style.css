@@ -184,7 +184,7 @@ p {
   padding: 0 8px 0 0; }
 
 .slider {
-  background: url(../images/slider.jpg) no-repeat;
+  background: url(../images/carro.jpg) no-repeat;
   background-size: cover;
   min-height: 100vh; }
   @media (max-width: 992px) {
