@@ -18,13 +18,14 @@ import com.th.comedor.model.entity.Dias;
 import com.th.comedor.model.entity.Persona;
 import com.th.comedor.model.entity.Reserva;
 import com.th.comedor.model.entity.Subvension;
+import com.th.comedor.model.entity.TipoReserva;
 import com.th.comedor.model.serviceI.IDiasService;
 import com.th.comedor.model.serviceI.IPersonaService;
 import com.th.comedor.model.serviceI.IReservaService;
 import com.th.comedor.model.serviceI.ISubvensionService;
+import com.th.comedor.model.serviceI.ITipoReservaService;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,6 +42,8 @@ public class ReservaController {
     private ISubvensionService subvensionService;
     @Autowired
     private IReservaService reservaService; 
+    @Autowired
+    private ITipoReservaService tipoReservaService;
 
     @GetMapping("/buscador")
     public String buscador(Model model) {
@@ -102,6 +105,13 @@ public class ReservaController {
         redirectAttributes.addFlashAttribute("nombre", persona.getNombre());
         redirectAttributes.addFlashAttribute("mensaje", "Tu reserva fue completada con éxito");
         return "redirect:/buscador";
+    }
+
+    @GetMapping("/seleccionReserva")
+    public String seleccionReserva(Model model){
+        List<TipoReserva> tipoReservas = tipoReservaService.findAll();
+        model.addAttribute("tipoReservas", tipoReservas);
+        return "reserva/seleccion_reserva";
     }
 
     @GetMapping("/reservasHoy")
