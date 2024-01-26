@@ -1,56 +1,32 @@
-<header id="header" th:fragment="menu">
-    <div class="header-top">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-sm-6 col-6 header-top-left">
-                    <ul>
-                        <li><a href="#">Visit Us</a></li>
-                        <li><a href="#">Buy Tickets</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-6 header-top-right">
-                    <div class="header-social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-dribbble"></i></a>
-                        <a href="#"><i class="fa fa-behance"></i></a>
-                    </div>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-verde-oscuro" th:fragment="menu" id="navegacion">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="serviciosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Servicios hoy
+            </a>
+            <div class="dropdown-menu" aria-labelledby="serviciosDropdown">
+                <a class="dropdown-item" href="servicio1.html">Desayuno Actual</a>
+                <a class="dropdown-item" href="servicio2.html">Almuerzo Actual</a>
+                <a class="dropdown-item" href="servicio2.html">Cena Actual</a>
+                <!-- Puedes agregar más elementos según sea necesario -->
             </div>
-        </div>
-    </div>
-    <div class="container main-menu">
-        <div class="row align-items-center justify-content-between d-flex">
-            <div id="logo">
-                <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="contactoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Gestion de datos
+            </a>
+            <div class="dropdown-menu" aria-labelledby="contactoDropdown">
+                <a class="dropdown-item" href="correo.html">Lista de personas</a>
+                <a class="dropdown-item" href="telefono.html">Lista de subensiones</a>
+                <a class="dropdown-item" href="telefono.html">Consultas</a>
+                <!-- Puedes agregar más elementos según sea necesario -->
             </div>
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li><a th:href="@{/index}">Principal</a></li>
-                    <li><a th:href="@{/personas}">Personas</a></li>
-                    <li><a href="packages.html">Packages</a></li>
-                    <li><a href="hotels.html">Hotels</a></li>
-                    <li><a href="insurance.html">Insurence</a></li>
-                    <li class="menu-has-children"><a href="">Blog</a>
-                        <ul>
-                            <li><a href="blog-home.html">Blog Home</a></li>
-                            <li><a href="blog-single.html">Blog Single</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-has-children"><a href="">Pages</a>
-                        <ul>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li class="menu-has-children"><a href="">Level 2 </a>
-                                <ul>
-                                    <li><a href="#">Item One</a></li>
-                                    <li><a href="#">Item Two</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav><!-- #nav-menu-container -->
-        </div>
-    </div>
-</header><!-- #header -->
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/seleccionBuscador}">Entrada</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" th:href="@{/seleccionReserva}">Comedor</a>
+        </li>
+    </ul>
+</nav>

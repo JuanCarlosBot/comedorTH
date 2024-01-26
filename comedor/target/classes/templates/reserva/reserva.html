@@ -2,138 +2,212 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TAHUAMANU S.A. </title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- Estilos de DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TAHUAMANU S.A. </title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+		integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<!-- Estilos de DataTables CSS -->
+	<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<style>
 		.prin {
-            background-image: url(../images/sliderr.jpg); /* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            min-height: 100vh;
-            color: white; /* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
-        }
-        /* Estilos personalizados van aquí */
-    </style>
+			background-image: url(../images/sliderr.jpg);
+			/* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			min-height: 100vh;
+			color: white;
+			/* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
+		}
+
+		/* Estilos personalizados van aquí */
+	</style>
 </head>
 
 <body class="bg-light text-dark tracking-wider leading-normal prin">
 
-    <!-- Contenedor principal -->
-    <div class="container-fluid">
+	<!-- Contenedor principal -->
+	<div class="container-fluid">
 
-        <!-- Título -->
-        <div class="mt-4" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
-            <h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl" style="color: rgb(14, 129, 47);">
-                TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
-            </h1>
-        </div>
+		<!-- Título -->
+		<div class="mt-4" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
+			<h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl"
+				style="color: rgb(14, 129, 47);">
+				TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
+			</h1>
+		</div>
 
-        <!-- Filas -->
-        <div class="row mx-2 mt-4">
+		<!-- Filas -->
+		<div class="row mx-2 mt-4">
 
 			<!-- Div central de 3 columnas para los números -->
-			<div class="col-md-3 mx-auto text-center d-flex flex-column" style="background-color: rgba(238, 241, 240, 0.89); border-radius: 2%;">
+			<div class="col-md-3 mx-auto text-center d-flex flex-column"
+				style="background-color: rgba(238, 241, 240, 0.89); border-radius: 2%;">
 				<!-- Contenido de los números -->
 				<div class="mt-4">
 					<h2><a href="javascript:location.reload()">Actualizar</a></h2>
 				</div>
 				<div class="row mt-4" style="color: rgb(14, 88, 36); font-size: 20px;">
-					<div class="col-md-12"><strong style="font-size: 50px;">200</strong></div>
+					<div class="col-md-12"><strong style="font-size: 50px;" th:text="${cantPendiente}">200</strong>
+					</div>
 					<div class="col-md-12"><label class="label">PENDIENTE:</label></div>
 				</div>
 				<div class="row mt-4" style="color: rgb(112, 72, 20); font-size: 20px;">
-					<div class="col-md-12"><strong style="font-size: 50px;">100</strong></div>
-					<div class="col-md-12"><label class="label">ALMORAZADO:</label></div>
+					<div class="col-md-12"><strong style="font-size: 50px;" th:text="${cantAlmorzado}">100</strong>
+					</div>
+					<div class="col-md-12"><label class="label">ALMORAZADOS:</label></div>
 				</div>
 				<div class="row mt-4" style="color: rgb(16, 49, 158); font-size: 20px;">
-					<div class="col-md-12"><strong style="font-size: 50px;">300</strong></div>
+					<div class="col-md-12" th:i><strong style="font-size: 50px;" th:text="${total}">300</strong></div>
 					<div class="col-md-12"><label class="label">TOTAL:</label></div>
 				</div></br>
 				<div class="mt-4">
 					<h2><a th:href="@{/seleccionReserva}">Atras</a></h2>
 				</div>
 			</div>
-		
+
 			<!-- Div más amplio de 9 columnas para la tabla -->
 			<div class="col-md-9 mx-auto">
 				<!-- Contenido de la tabla -->
 				<div id='recipients' class="p-4 mt-6 lg:mt-0 rounded shadow bg-white">
-					<table id="example" class="stripe hover" style="width:100%;">
+					<table id="example1" class="table table-bordered dt-responsive nowrap"
+						style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 						<thead>
 							<tr>
 								<th data-priority="1">#</th>
+								<th data-priority="2">NOMBRE COMPLETO</th>
 								<th data-priority="3">CODIGO</th>
 								<th data-priority="4">CI</th>
-								<th data-priority="5">NOMBRE COMPLETO</th>
-								<th data-priority="6">ESTADO</th>
-								<th data-priority="7">SECCION</th>
+								<th data-priority="5">ESTADO</th>
+								<th data-priority="6">SECCION</th>
+								<th data-priority="7">TIPO</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr style="text-align: center;" th:each="r, i:${reservasHoy}">
+							<tr style="text-align: center;" th:each="r, i:${reservasHoy}"
+								th:if="${r.estado_reserva != 'X'}">
 								<td th:text="${i.index+1}"></td>
+								<td>
+									<th:block th:if="${r.estados.id_estado==1}">
+										<button type="button" class="btn btn-primary"
+											th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}"
+											onclick="abrirModal(this)">
+											<strong th:text="${r.persona.nombre}"></strong>
+										</button>
+									</th:block>
+									<th:block th:if="${r.estados.id_estado==2}">
+										<button type="button" class="btn btn-secondary">
+											<strong th:text="${r.persona.nombre}"></strong>
+										</button>
+									</th:block>
+								</td>
 								<td th:text="${r.persona.codigo}"></td>
 								<td th:text="${r.persona.ci}"></td>
 								<td>
 									<th:block th:if="${r.estados.id_estado==1}">
-										<button type="button" class="btn btn-primary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}" onclick="abrirModal(this)">
-											<strong th:text="${r.persona.nombre}"></strong>
-										</button>    
+										<span class="badge badge-success"
+											th:text="${r.estados.nombre_estado}">Fijo</span>
 									</th:block>
 									<th:block th:if="${r.estados.id_estado==2}">
-										<button type="button" class="btn btn-secondary" th:attr="data-id=${r.id_reserva}, data-nombre=${r.persona.nombre}">
-											<strong th:text="${r.persona.nombre}"></strong>
-										</button>    
-									</th:block>
-								</td>
-								<td>
-									<th:block th:if="${r.estados.id_estado==1}">
-										<button type="button" class="btn btn-success" th:text="${r.estados.nombre_estado}"></button>
-									</th:block>
-									<th:block th:if="${r.estados.id_estado==2}">
-										<button type="button" class="btn btn-danger" th:text="${r.estados.nombre_estado}"></button>
+										<span class="badge badge-warning"
+											th:text="${r.estados.nombre_estado}">Fijo</span>
 									</th:block>
 								</td>
 								<td th:text="${r.persona.seccion.numero_seccion}"></td>
+								<td th:text="${r.tipo_reserva.nombre_tipo_reserva}"></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
+				<script>
+					function abrirModal(enlace) {
+						var idReserva = enlace.getAttribute("data-id");
+						var nombrePersona = enlace.getAttribute("data-nombre");
+
+						document.getElementById("idReserva").value = idReserva;
+						document.getElementById("personaNombre").innerText = nombrePersona;
+
+						$('#myModal').modal('show');
+					}
+				</script>
+				<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<form th:action="@{/confirmarReserva}" method="post">
+								<input type="hidden" class="form-control" id="idTipoReserva" name="id_tipo_reserva" th:value="${tipoReserva.id_tipo_reserva}">
+								<input type="hidden" class="form-control" id="idReserva" name="id_reserva">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel" th:text="${tipoReserva.nombre_tipo_reserva}">Cambio de estado</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body" style="text-align: center;">
+									<div class="form-group" >
+										<i class="fas fa-check-circle" style="color: green; font-size: 48px;"></i>
+										<strong style="font-size: 28px;" id="personaNombre"></strong>
+									</div>
+									<p>¡Confirmación la entrega de su reserva!</p>
+								</div>
+								<div class="modal-footer" style="text-align: center;">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+									<button type="submit" class="btn btn-primary">Confirmar</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
-		
+
 		</div>
-        <!-- /Filas -->
+		<!-- /Filas -->
 
-    </div>
-    <!-- /Contenedor principal -->
+	</div>
+	<!-- /Contenedor principal -->
 
-    <!-- Scripts de Bootstrap y jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- Scripts de Bootstrap y jQuery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <!-- Scripts de DataTables -->
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+	<!-- Scripts de DataTables -->
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            var table = $('#example').DataTable({
-                responsive: true
-            }).columns.adjust().responsive.recalc();
-        });
-    </script>
+	<script>
+		$(function () {
+			$("#example1").DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+				//, "colvis"
+			}).buttons().container().appendTo(
+				'#example1_wrapper .col-md-6:eq(0)');
+			$('#example2').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example2_wrapper .col-md-6:eq(0)');
+			$('#example3').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example3_wrapper .col-md-6:eq(0)');
+		});
+	</script>
 
 </body>
 

@@ -161,6 +161,22 @@ public class ReservaController {
             // Ahora, fechaActualFormateada contiene la fecha actual en formato Date
             System.out.println("Fecha actual formateada: " + fechaActualFormateada);
             List<Reserva> listaReservasHoy = reservaService.listaReservaPorDia(fechaActualFormateada, tipoReserva.getId_tipo_reserva());
+            int cantPendiente=0;
+            int cantAlmorzado=0;
+            int total=0;
+            for (Reserva reserva : listaReservasHoy) {
+                if (reserva.getEstado_reserva().equals("A")) {
+                    total++;
+                    if (reserva.getEstados().getId_estado()==1) {
+                        cantPendiente++;
+                    }else if (reserva.getEstados().getId_estado()==2) {
+                        cantAlmorzado++;
+                    }
+                }
+            }
+            model.addAttribute("cantPendiente", cantPendiente);
+            model.addAttribute("cantAlmorzado", cantAlmorzado);
+            model.addAttribute("total", total);
             model.addAttribute("tipoReserva", tipoReserva);
             model.addAttribute("reservasHoy", listaReservasHoy);
 
@@ -169,6 +185,17 @@ public class ReservaController {
         }
         
         return "reserva/reserva";
+    }
+
+    @PostMapping("/confirmarReserva")
+    public String confirmarReserva(@RequestParam("id_reserva") Long id_reserva , HttpServletRequest request){
+        String id_tiporeserva = request.getParameter("id_tipo_reserva");
+        Long id_tipo_reserva = Long.parseLong(id_tiporeserva);
+        Estados estados = estadoService.findOne(2l);
+        Reserva reserva = reservaService.findOne(id_reserva);
+        reserva.setEstados(estados);
+        reservaService.save(reserva);
+        return "redirect:/reservasHoy/"+id_tipo_reserva;
     }
     
 }
