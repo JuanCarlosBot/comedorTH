@@ -10,7 +10,8 @@ import com.th.comedor.model.entity.Reserva;
 
 public interface ReservaDao extends JpaRepository<Reserva, Long>{
     
-    @Query(value = "select * from dias d left join reserva r on d.id_dia=r.id_dias " +
-            "where d.id_dia=r.id_dias and d.fecha = ?1", nativeQuery = true)
-    public List<Reserva> listaReservaPorDia(Date fecha);
+    @Query(value = "select * from dias d " +
+    "left join reserva r on d.id_dia = r.id_dias " +
+    "where d.fecha = ?1 and r.id_tipo_reserva = ?2", nativeQuery = true)
+    public List<Reserva> listaReservaPorDia(Date fecha, Long id_tipo_reserva);
 }

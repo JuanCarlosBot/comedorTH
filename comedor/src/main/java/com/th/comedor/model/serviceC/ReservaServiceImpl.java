@@ -37,8 +37,8 @@ public class ReservaServiceImpl implements IReservaService{
     }
 
     @Override
-    public List<Reserva> listaReservaPorDia(Date fecha) {
-        return reservaDao.listaReservaPorDia(fecha);
+    public List<Reserva> listaReservaPorDia(Date fecha, Long id_tipo_reserva) {
+        return reservaDao.listaReservaPorDia(fecha, id_tipo_reserva);
     }
     
 }

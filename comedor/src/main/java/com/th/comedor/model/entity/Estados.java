@@ -30,7 +30,7 @@ public class Estados implements Serializable{
     @Column
     private String nombre_estado;
 
-    @JsonIgnore
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estados", fetch = FetchType.LAZY)
 	private List<Reserva> reserva;
 }

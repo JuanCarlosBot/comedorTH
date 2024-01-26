@@ -15,5 +15,5 @@ public interface IReservaService {
 
 	public void delete(Long id_reserva);
 
-	public List<Reserva> listaReservaPorDia(Date fecha);
+	public List<Reserva> listaReservaPorDia(Date fecha, Long id_tipo_reserva);
 }

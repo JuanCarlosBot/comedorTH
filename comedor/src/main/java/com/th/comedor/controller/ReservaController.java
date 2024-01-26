@@ -150,17 +150,17 @@ public class ReservaController {
     }
 
     @GetMapping("/reservasHoy/{idTipoReserva}")
-    public String reservasHoy(@PathVariable Long idTipoReserva, Model model){
+    public String reservasHoy(@PathVariable(value = "idTipoReserva") Long idTipoReserva, Model model){
         TipoReserva tipoReserva = tipoReservaService.findOne(idTipoReserva);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaFormateada = sdf.format(new Date());
-
+        System.out.println(tipoReserva.getNombre_tipo_reserva());
         try {
             Date fechaActualFormateada = sdf.parse(fechaFormateada);
             // Ahora, fechaActualFormateada contiene la fecha actual en formato Date
             System.out.println("Fecha actual formateada: " + fechaActualFormateada);
-            List<Reserva> listaReservasHoy = reservaService.listaReservaPorDia(fechaActualFormateada);
+            List<Reserva> listaReservasHoy = reservaService.listaReservaPorDia(fechaActualFormateada, tipoReserva.getId_tipo_reserva());
             model.addAttribute("tipoReserva", tipoReserva);
             model.addAttribute("reservasHoy", listaReservasHoy);
 
