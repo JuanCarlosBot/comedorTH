@@ -34,6 +34,8 @@
 					<tr th:each="d, i: ${dias}" style="font-size: 12px;">
 						<td>
 							<a th:href="@{'/verDetalleReserva/'+${d.id_dia}+'/'+${id_tipo_reserva}}" th:text="${d.fecha_formateada}"></a>
+							<a href="" th:attr="data-iddia=${d.id_dia}, data-idtiporeserva=${id_tipo_reserva}"
+							onclick="abrirModal(this)">presionar</a>
 						</td>
 						<td th:text="${d.tipo}"></td>
 						<td th:text="${d.cantidad_reservas_pendientes+' - Personas'}"></td>
