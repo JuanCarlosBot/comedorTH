@@ -17,4 +17,6 @@ public interface IReservaService {
 
 	public List<Reserva> listaReservaPorDia(Date fecha, Long id_tipo_reserva);
 
+	public List<Reserva> reservasPorTipoYDia(Long id_dia, Long id_tipo_reserva);
+
 }

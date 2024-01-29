@@ -141,42 +141,38 @@
                     }
                     }
 				</script>
-				<script>
-					function abrirModal(enlace) {
-						var id_dia = enlace.getAttribute("data-iddia");
-						var id_tipo_reserva = enlace.getAttribute("data-idtiporeserva");
-alert(id_dia+' '+id_tipo_reserva);
-						document.getElementById("idReserva").value = idReserva;
-						document.getElementById("personaNombre").innerText = nombrePersona;
-
-						$('#myModalDetalle').modal('show');
-					}
-				</script>
+				
 				<div class="modal fade" id="myModalDetalle" tabindex="-1" aria-labelledby="exampleModalLabel"
 					aria-hidden="true">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
-							<form th:action="@{/confirmarReserva}" method="post">
-								<input type="text" class="form-control" id="idTipoReserva" name="id_tipo_reserva" >
-								<input type="text" class="form-control" id="idReserva" name="id_reserva">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel" >Cambio de estado</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body" style="text-align: center;">
-									<div class="form-group" >
-										<i class="fas fa-check-circle" style="color: green; font-size: 48px;"></i>
-										<strong style="font-size: 28px;" id="personaNombre"></strong>
-									</div>
-									<p>¡Confirmación la entrega de su reserva!</p>
-								</div>
-								<div class="modal-footer" style="text-align: center;">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-									<button type="submit" class="btn btn-primary">Confirmar</button>
-								</div>
-							</form>
+							<div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+								<table id="example2" class="table table-bordered dt-responsive nowrap"
+									style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+									<thead>
+										<tr>
+											<th data-priority="1">#</th>
+											<th data-priority="2">NOMBRE COMPLETO</th>
+											<th data-priority="3">CODIGO</th>
+											<th data-priority="4">CI</th>
+											<th data-priority="5">ESTADO</th>
+											<th data-priority="6">SECCION</th>
+											<th data-priority="7">TIPO</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr style="text-align: center;">
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -186,6 +182,7 @@ alert(id_dia+' '+id_tipo_reserva);
 		<!-- /Filas -->
 
 	</div>
+	
 	<!-- /Contenedor principal -->
 
 	<!-- Scripts de Bootstrap y jQuery -->
@@ -217,6 +214,49 @@ alert(id_dia+' '+id_tipo_reserva);
             });
         });
     </script>
+	<script>
+		function abrirModal(event, enlace) {
+			event.preventDefault();
+			console.log("Función abrirModal llamada");
+			var id_dia = enlace.getAttribute("data-iddia");
+			var id_tipo_reserva = enlace.getAttribute("data-idtiporeserva");
+			//alert(id_dia+' '+id_tipo_reserva);
+			// Enviar los datos al controlador utilizando AJAX
+			$.ajax({
+				type: "POST",
+				url: "/generarDetalleConsulta",
+				data: {
+					id_dia: id_dia,
+					id_tipo_reserva: id_tipo_reserva
+				},
+				success: function (reservas) {
+					$("#example2 tbody").empty();
+					for (var i = 0; i < reservas.length; i++) {
+						var reserva = reservas[i];
+						var fila = "<tr>" +
+							"<td>" + (i + 1) + "</td>" +
+							"<td>" + reserva.persona.nombre + "</td>" +
+							"<td>" + reserva.persona.codigo + "</td>" +
+							"<td>" + reserva.persona.ci + "</td>" +
+							"<td>" + reserva.estados.nombre_estado + "</td>" +
+							"<td>" + reserva.persona.seccion.numero_seccion + "</td>" +
+							"<td>" + reserva.tipo_reserva.nombre_tipo_reserva + "</td>" +
+							"</tr>";
+
+						// Agregar la fila a la tabla
+						$("#example2 tbody").append(fila);
+					}
+
+					// Mostrar el modal usando jQuery
+					$("#myModalDetalle").modal("show");
+				},
+				error: function (error) {
+					console.error(error);
+				}
+			});
+			
+		}
+	</script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 	<!-- Scripts de DataTables -->

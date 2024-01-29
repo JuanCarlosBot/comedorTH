@@ -11,9 +11,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -35,10 +38,11 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
-
+@CrossOrigin
 @Controller
 public class ReservaController {
     
@@ -285,13 +289,29 @@ public class ReservaController {
         for (Reserva reserva : r) {
             System.out.println(reserva.getPersona().getNombre()+" == "+reserva.getEstados().getNombre_estado());
         }
-
-
         model.addAttribute("cantPerPendientes", cantPerPendientes);
         model.addAttribute("cantidadPersona", cantidadPersona);
         model.addAttribute("cantPerServidos", cantPerServidos);
         model.addAttribute("reservas", r);
         // Lógica de tu controlador aquí
         return "reserva/detalle_consulta";  // Cambia esto por la vista adecuada
+    }
+
+    @PostMapping("/generarDetalleConsulta")
+    @ResponseBody
+    public ResponseEntity<List<Reserva>> confirmarReserva(@RequestParam("id_dia") Long idDia,
+                                                        @RequestParam("id_tipo_reserva") Long idTipoReserva) {
+        try {
+            // Lógica para obtener la lista de reservas por día y tipo
+            System.out.println(idDia+"   f "+idTipoReserva);
+            // Supongamos que tienes un servicio que devuelve la lista de reservas
+            List<Reserva> reservas = reservaService.reservasPorTipoYDia(idDia, idTipoReserva);
+
+            // Devolver la lista de reservas como parte de la respuesta
+            return new ResponseEntity<>(reservas, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // o loguea utilizando un logger
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
