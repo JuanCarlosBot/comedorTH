@@ -14,7 +14,9 @@
 	<!-- Estilos de DataTables CSS -->
 	<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
+        <!--botones para tabla-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
 	<style>
 		.prin {
 			background-image: url(../images/sliderr.jpg);
@@ -39,15 +41,12 @@
 	<!-- Contenedor principal -->
 	<div class="container-fluid">
 
-		<!-- Título -->
 		<div class="mt-2" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
 			<h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl"
 				style="color: rgb(14, 129, 47);">
-				TAHUAMANU S.A.
+				TAHUAMANU S.A. - 
 			</h1>
 		</div>
-
-		<!-- Filas -->
 		<div class="row mx-2 mt-2">
 
 			<!-- Div central de 3 columnas para los números -->
@@ -63,41 +62,36 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form th:action="${edit} ?@{/guardarModificadoPersona} :@{/guardarPersona}" method="post">
-                            <input type="hidden"
-                                th:field="${persona.id_persona}">
+                        <form method="get" id="miFormulario">
+                            
                             <h4 class="header-title">FORMULARIO</h4>
                             <div class="form-group row">
                                 <div class="form-group col-md-4">
-                                    <label for="codigo">Codigo:</label>
-                                    <input type="text" class="form-control" th:field="${persona.codigo}" placeholder="Ingrese su codigo" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                    <label for="codigo">Fecha inicio:</label>
+                                    <input type="date" class="form-control" name="fecha1" id="fecha1" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="ci">Ci:</label>
-                                    <input type="text" class="form-control" th:field="${persona.ci}" placeholder="Ingrese su ci" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                    <label for="ci">Fecha fin:</label>
+                                    <input type="date" class="form-control" name="fecha2" id="fecha2" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="seccion">Seccion:</label>
-                                    <select class="form-control" th:field="${persona.seccion}" required>
+                                    <label for="seccion">Tipo:</label>
+                                    <select class="form-control" id="tipo" required>
                                         <option value="" selected>Seleccionar...</option>
-                                        <option th:each="s:${secciones}"
-                                            th:value="${s.id_seccion}"
-                                            th:text="${s.numero_seccion}">-</option>
+                                        <option th:each="s:${tipoReservas}"
+                                            th:value="${s.id_tipo_reserva}"
+                                            th:text="${s.nombre_tipo_reserva}">-</option>
                                     </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="apellido">Apellidos y Nombres:</label>
-                                    <input type="text" class="form-control" th:field="${persona.nombre}" placeholder="Ingrese sus apellidos y nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary mb-2 "
-                                        th:text="${edit} ?'Actualizar' :'Guardar'"></button>
+                                    <button type="submit" class="btn btn-primary mb-2">Consultar</button>
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                 </div>
 			</div>
@@ -105,35 +99,30 @@
 			<!-- Div más amplio de 9 columnas para la tabla -->
 			<div class="col-md-7 mx-auto">
 				<!-- Contenido de la tabla -->
-				<div id='recipients' class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
-					<table id="example1" class="table table-bordered dt-responsive nowrap"
-						style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-						<thead>
-							<tr style="font-size: 12px;">
-								<th data-priority="2">CODIGO</th>
-								<th data-priority="3">CI</th>
-								<th data-priority="4">NOMBRE COMPLETO</th>
-								<th data-priority="5">SECCION</th>
-								<th data-priority="6">OPCIONES</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="p:${personas}" style="font-size: 12px;">
-                                <td th:text="${p.codigo}">E4319</td>
-                                <td th:text="${p.ci}">6920900</td>
-                                <td th:text="${p.nombre}">JUAN CARLOS MAMANI LAURA</td>
-                                <td th:text="${p.seccion.numero_seccion}">2025</td>
-                                <td>
-                                    <a type="button"
-                                        th:href="@{'/modificarPersona/'+${p.id_persona}}"
-                                        >
-                                        <span class="mdi mdi-pencil-box-outline"> Modificar</span>
-                                    </a>
-                                </td>
-                            </tr>
-						</tbody>
-					</table>
-				</div>
+                <div id='recipients'>
+                    <div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+                        <table class="table table-bordered dt-responsive nowrap"
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr style="font-size: 12px;">
+                                    <th data-priority="1">FECHA</th>
+                                    <th data-priority="2">TIPO</th>
+                                    <th data-priority="3">PENDIENTES</th>
+                                    <th data-priority="3">SERVIDOS</th>
+                                    <th data-priority="3">TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  style="font-size: 12px; text-align: center;">
+                                    <td colspan="5">
+                                        Aquí se mostrará los datos de la consulta.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    
 				<script>
 					function abrirModal(enlace) {
 						var idReserva = enlace.getAttribute("data-id");
@@ -144,6 +133,21 @@
 
 						$('#myModal').modal('show');
 					}
+                    function redirigirDetalle(enlace) {
+                        try {
+                        var id_dia = enlace.getAttribute("data-idDia");
+                        var id_tipo_reserva = enlace.getAttribute("data-idTReserva");
+                        
+                        // Construir la URL con los parámetros
+                        alert(id_dia + ' ' + id_tipo_reserva);
+                        var url = "/verDetalleReserva?idDia=" + id_dia + "&idTipoReserva=" + id_tipo_reserva;
+
+                        // Redirigir a la nueva URL
+                        window.location.href = url;
+                    } catch (error) {
+                        console.error("Error en redirigirDetalle:", error);
+                    }
+                    }
 				</script>
 				
 			</div>
@@ -156,6 +160,33 @@
 
 	<!-- Scripts de Bootstrap y jQuery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#miFormulario').submit(function (e) {
+                e.preventDefault(); // Evitar la recarga de la página al enviar el formulario
+    
+                // Obtener los valores de los elementos
+                var fecha1 = $('#fecha1').val();
+                var fecha2 = $('#fecha2').val();
+                var tipo = $('#tipo').val();
+    
+                // Mostrar los valores en una alerta (puedes quitar esto después de verificar que funciona)
+                console.log("Fecha1: " + fecha1 + ", Fecha2: " + fecha2 + ", Tipo: " + tipo);
+    
+                // Verificar que los valores no estén vacíos o sean nulos antes de realizar la solicitud
+                if (fecha1 && fecha2 && tipo) {
+                    // Construir la URL con los valores
+                    var url = "/consultas/" + fecha1 + "/" + fecha2 + "/" + tipo;
+    
+                    // Realizar la solicitud AJAX
+                    $('#recipients').load(url);
+                } else {
+                    // Manejar el caso donde alguno de los valores es nulo o vacío
+                    console.log('Asegúrate de completar todos los campos antes de consultar.');
+                }
+            });
+        });
+    </script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 	<!-- Scripts de DataTables -->
@@ -165,7 +196,7 @@
 	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
 
-	<!--para botones en la tabla-->
+    <!--para botones en la tabla-->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>

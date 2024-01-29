@@ -1,131 +1,203 @@
 <!DOCTYPE html>
-<html lang="zxx" class="no-js">
+<html lang="es">
 
-<head th:replace="~{layout/head :: head}">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TAHUAMANU S.A. </title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+		integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<!-- Estilos de DataTables CSS -->
+	<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+	<style>
+		.prin {
+			background-image: url(../images/sliderr.jpg);
+			/* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			min-height: 100vh;
+			color: white;
+			/* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
+		}
+        
+        .bg-verde-oscuro {
+            background-color: #006400; /* Cambia el código de color según tu preferencia */
+        }
+		/* Estilos personalizados van aquí */
+	</style>
 </head>
 
-<body>
-    <header th:replace="~{layout/menu :: menu}"></header><!-- #header -->
+<body class="bg-light text-dark tracking-wider leading-normal prin">
+    <nav th:replace="~{layout/menu :: menu}"></nav>
+	<!-- Contenedor principal -->
+	<div class="container-fluid">
 
-    <!-- start banner Area -->
-    <section class="banner-area relative">
-        <div class="overlay overlay-bg"></div>
-        <div class="container">
-            <div class="row fullscreen align-items-center justify-content-between">
+		<!-- Título -->
+		<div class="mt-2" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
+			<h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl"
+				style="color: rgb(14, 129, 47);">
+				TAHUAMANU S.A.
+			</h1>
+		</div>
 
-                <div class="col-lg-12 col-md-12 banner-right" style="margin-top: 5px;">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="flight-tab" data-toggle="tab" href="#personas" role="tab"
-                                aria-controls="flight" aria-selected="true">PERSONAS</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="hotel-tab" data-toggle="tab" href="#hotel" role="tab"
-                                aria-controls="hotel" aria-selected="false">Hotels</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="holiday-tab" data-toggle="tab" href="#holiday" role="tab"
-                                aria-controls="holiday" aria-selected="false">Holidays</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content p-3" id="myTabContent">
-                        <div class="tab-pane fade show active" id="personas" role="tabpanel"
-                            aria-labelledby="flight-tab">
-                            <table id="example1" class="table table-striped table-bordered dt-responsive"
-                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>CODIGO</th>
-                                        <th>CI</th>
-                                        <th>NOMBRE COMPLETO</th>
-                                        <th>SECCION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="font-size: 12px;" th:each="p, i:${personas}">
-                                        <td th:text="${i.index+1}"></td>
-                                        <td th:text="${p.codigo}"></td>
-                                        <td th:text="${p.ci}"></td>
-                                        <td th:text="${p.nombre}"></td>
-                                        <td th:text="${p.seccion.numero_seccion}"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+		<!-- Filas -->
+		<div class="row mx-2 mt-2">
+
+			<!-- Div central de 3 columnas para los números -->
+			<div class="col-md-5">
+				<!-- Contenido de los números -->
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                            role="alert" th:if="${mensaje != null}">
+                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="tab-pane fade" id="hotel" role="tabpanel" aria-labelledby="hotel-tab">
-                            <form class="form-wrap">
-                                <input type="text" class="form-control" name="name" placeholder="From "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'From '">
-                                <input type="text" class="form-control" name="to" placeholder="To "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'To '">
-                                <input type="text" class="form-control date-picker" name="start" placeholder="Start "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start '">
-                                <input type="text" class="form-control date-picker" name="return" placeholder="Return "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return '">
-                                <input type="number" min="1" max="20" class="form-control" name="adults"
-                                    placeholder="Adults " onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Adults '">
-                                <input type="number" min="1" max="20" class="form-control" name="child"
-                                    placeholder="Child " onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Child '">
-                                <a href="#" class="primary-btn text-uppercase">Search Hotels</a>
-                            </form>
-                        </div>
-                        <div class="tab-pane fade" id="holiday" role="tabpanel" aria-labelledby="holiday-tab">
-                            <form class="form-wrap">
-                                <input type="text" class="form-control" name="name" placeholder="From "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'From '">
-                                <input type="text" class="form-control" name="to" placeholder="To "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'To '">
-                                <input type="text" class="form-control date-picker" name="start" placeholder="Start "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start '">
-                                <input type="text" class="form-control date-picker" name="return" placeholder="Return "
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return '">
-                                <input type="number" min="1" max="20" class="form-control" name="adults"
-                                    placeholder="Adults " onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Adults '">
-                                <input type="number" min="1" max="20" class="form-control" name="child"
-                                    placeholder="Child " onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Child '">
-                                <a href="#" class="primary-btn text-uppercase">Search Holidays</a>
-                            </form>
-                        </div>
+                        <form th:action="${edit} ?@{/guardarModificadoPersona} :@{/guardarPersona}" method="post">
+                            <input type="hidden"
+                                th:field="${persona.id_persona}">
+                            <h4 class="header-title">FORMULARIO</h4>
+                            <div class="form-group row">
+                                <div class="form-group col-md-4">
+                                    <label for="codigo">Codigo:</label>
+                                    <input type="text" class="form-control" th:field="${persona.codigo}" placeholder="Ingrese su codigo" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ci">Ci:</label>
+                                    <input type="text" class="form-control" th:field="${persona.ci}" placeholder="Ingrese su ci" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="seccion">Seccion:</label>
+                                    <select class="form-control" th:field="${persona.seccion}" required>
+                                        <option value="" selected>Seleccionar...</option>
+                                        <option th:each="s:${secciones}"
+                                            th:value="${s.id_seccion}"
+                                            th:text="${s.numero_seccion}">-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="apellido">Apellidos y Nombres:</label>
+                                    <input type="text" class="form-control" th:field="${persona.nombre}" placeholder="Ingrese sus apellidos y nombres" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary mb-2 "
+                                        th:text="${edit} ?'Actualizar' :'Guardar'"></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+			</div>
 
+			<!-- Div más amplio de 9 columnas para la tabla -->
+			<div class="col-md-7 mx-auto">
+				<!-- Contenido de la tabla -->
+				<div id='recipients' class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+					<table id="example1" class="table table-bordered dt-responsive nowrap"
+						style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+						<thead>
+							<tr style="font-size: 12px;">
+								<th data-priority="2">CODIGO</th>
+								<th data-priority="3">CI</th>
+								<th data-priority="4">NOMBRE COMPLETO</th>
+								<th data-priority="5">SECCION</th>
+								<th data-priority="6">OPCIONES</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p:${personas}" style="font-size: 12px;">
+                                <td th:text="${p.codigo}">E4319</td>
+                                <td th:text="${p.ci}">6920900</td>
+                                <td th:text="${p.nombre}">JUAN CARLOS MAMANI LAURA</td>
+                                <td th:text="${p.seccion.numero_seccion}">2025</td>
+                                <td>
+                                    <a type="button"
+                                        th:href="@{'/modificarPersona/'+${p.id_persona}}"
+                                        >
+                                        <span class="mdi mdi-pencil-box-outline"> Modificar</span>
+                                    </a>
+                                </td>
+                            </tr>
+						</tbody>
+					</table>
+				</div>
+				<script>
+					function abrirModal(enlace) {
+						var idReserva = enlace.getAttribute("data-id");
+						var nombrePersona = enlace.getAttribute("data-nombre");
 
-    <!-- start footer Area -->
-    <div th:replace="~{layout/footer :: footer}"></div>
-    <script>
-        $(function () {
-            $("#example1").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-                //, "colvis"
-            }).buttons().container().appendTo(
-                '#example1_wrapper .col-md-6:eq(0)');
-            $('#example2').DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo(
-                '#example2_wrapper .col-md-6:eq(0)');
-            $('#example3').DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print"]
-            }).buttons().container().appendTo(
-                '#example3_wrapper .col-md-6:eq(0)');
-        });
-    </script>
+						document.getElementById("idReserva").value = idReserva;
+						document.getElementById("personaNombre").innerText = nombrePersona;
+
+						$('#myModal').modal('show');
+					}
+				</script>
+				
+			</div>
+
+		</div>
+		<!-- /Filas -->
+
+	</div>
+	<!-- /Contenedor principal -->
+
+	<!-- Scripts de Bootstrap y jQuery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<!-- Scripts de DataTables -->
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+
+	<!--para botones en la tabla-->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+	<script>
+		$(function () {
+			$("#example1").DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+				//, "colvis"
+			}).buttons().container().appendTo(
+				'#example1_wrapper .col-md-6:eq(0)');
+			$('#example2').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example2_wrapper .col-md-6:eq(0)');
+			$('#example3').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example3_wrapper .col-md-6:eq(0)');
+		});
+	</script>
+
 </body>
 
 </html>

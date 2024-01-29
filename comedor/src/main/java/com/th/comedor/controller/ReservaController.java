@@ -10,12 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.th.comedor.model.dao.DiasDao;
 import com.th.comedor.model.entity.Dias;
 import com.th.comedor.model.entity.Estados;
 import com.th.comedor.model.entity.Persona;
@@ -52,6 +54,8 @@ public class ReservaController {
     private ITipoReservaService tipoReservaService;
     @Autowired
     private IEstadoService estadoService;
+    @Autowired
+    private DiasDao diasDao;
 
     @GetMapping("/seleccionBuscador")
     public String seleccionBuscador(Model model){
@@ -72,7 +76,7 @@ public class ReservaController {
         
         SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MMM");
         for (Dias dia : fechasSemanaActual) {
-            dia.setFechaFormateada(sdf.format(dia.getFecha()));
+            dia.setFecha_formateada(sdf.format(dia.getFecha()));
         }
         model.addAttribute("fechasSemanaActual", fechasSemanaActual);
         model.addAttribute("tipoReserva", tipoReserva);
@@ -198,4 +202,96 @@ public class ReservaController {
         return "redirect:/reservasHoy/"+id_tipo_reserva;
     }
     
+
+
+    //consultas
+    @GetMapping("/consultas")
+    public String consultasReserva(Model model){
+        
+        model.addAttribute("tipoReservas", tipoReservaService.findAll());
+        return "reserva/consulta_reserva";
+    }
+
+    @GetMapping("/consultas/{fecha1}/{fecha2}/{tipo}")
+    public String consultasReservaTipo(
+        @PathVariable(value="fecha1", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha1,
+        @PathVariable(value="fecha2", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fecha2,
+        @PathVariable(value="tipo", required = false) Long tipo,
+        Model model ) {
+        TipoReserva tipoReserva = tipoReservaService.findOne(tipo);
+        int cantPerPendientes = 0;
+        int cantPerServidos = 0;
+        int cantidadPersona = 0;
+        List<Dias> dias = diasService.consultaRangoDias(fecha1, fecha2);
+        List<Dias> diasConDatos = new ArrayList<>();
+
+
+        for (Dias dia : dias) {
+            for (Reserva reserva : dia.getReserva()) {
+                
+                if (reserva.getTipo_reserva().getId_tipo_reserva()==tipo && reserva.getEstado_reserva().equals("A")) {
+                    cantidadPersona++;
+                    if (reserva.getEstados().getNombre_estado().equals("PENDIENTE")) {
+                        cantPerPendientes++;
+                    }else if(reserva.getEstados().getNombre_estado().equals("SERVIDO")){
+                        cantPerServidos++;
+                    }
+                }    
+                
+                
+            }
+            dia.setCantidad_reservas(cantidadPersona);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy - EEE");
+            String fechaFormateada = sdf.format(dia.getFecha());
+            //Date f = sdf.parse(fechaFormateada);
+            dia.setFecha_formateada(fechaFormateada);
+            dia.setCantidad_reservas_pendientes(cantPerPendientes);
+            dia.setCantidad_reservas_servidos(cantPerServidos);
+            dia.setTipo(tipoReserva.getNombre_tipo_reserva());
+            diasConDatos.add(dia);
+            cantidadPersona=0;
+            cantPerPendientes=0;
+            cantPerServidos=0;
+            System.out.println(dia.getFecha()+" // "+dia.getCantidad_reservas());    
+        }
+
+        model.addAttribute("id_tipo_reserva", tipo);
+        model.addAttribute("dias", diasConDatos);
+        return "content :: dias";
+    }
+
+
+
+    //ver detalle de la consulta
+    @GetMapping("/verDetalleReserva/{id_dia}/{id_tipo_reserva}")
+    public String verDetalleReserva(
+        @PathVariable(value="id_dia", required = false) Long id_dia,
+        @PathVariable(value="id_tipo_reserva", required = false) Long id_tipo_reserva,  Model model) {
+        Dias dia = diasService.findOne(id_dia);
+        TipoReserva tipoReserva = tipoReservaService.findOne(id_tipo_reserva);
+        int cantidadPersona=0, cantPerPendientes=0, cantPerServidos=0;
+        List<Reserva> r = new ArrayList<>();
+        for (Reserva reserva : dia.getReserva()) {
+            if (reserva.getTipo_reserva().getId_tipo_reserva()==id_tipo_reserva && reserva.getEstado_reserva().equals("A")) {
+                r.add(reserva);
+                cantidadPersona++;
+                if (reserva.getEstados().getNombre_estado().equals("PENDIENTE")) {
+                    cantPerPendientes++;
+                }else if(reserva.getEstados().getNombre_estado().equals("SERVIDO")){
+                    cantPerServidos++;
+                }
+            }   
+        }
+        for (Reserva reserva : r) {
+            System.out.println(reserva.getPersona().getNombre()+" == "+reserva.getEstados().getNombre_estado());
+        }
+
+
+        model.addAttribute("cantPerPendientes", cantPerPendientes);
+        model.addAttribute("cantidadPersona", cantidadPersona);
+        model.addAttribute("cantPerServidos", cantPerServidos);
+        model.addAttribute("reservas", r);
+        // Lógica de tu controlador aquí
+        return "reserva/detalle_consulta";  // Cambia esto por la vista adecuada
+    }
 }

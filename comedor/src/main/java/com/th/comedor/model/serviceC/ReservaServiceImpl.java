@@ -40,5 +40,5 @@ public class ReservaServiceImpl implements IReservaService{
     public List<Reserva> listaReservaPorDia(Date fecha, Long id_tipo_reserva) {
         return reservaDao.listaReservaPorDia(fecha, id_tipo_reserva);
     }
-    
+ 
 }

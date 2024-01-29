@@ -41,5 +41,10 @@ public class DiasServiceImpl implements IDiasService{
         return diasDao.buscarFechaActual(fecha1, fecha2);
     }
 
+    @Override
+    public List<Dias> consultaRangoDias(Date fecha1, Date fecha2) {
+        return diasDao.consultaRangoDias(fecha1, fecha2);
+    }
+
     
 }

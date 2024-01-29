@@ -16,4 +16,9 @@ public interface IDiasService {
 	public void delete(Long id_dias);
 
 	public List<Dias> buscarFechaActual(Date fecha1, Date fecha2);
+
+	//public List<Dias> consultaReservasRangoDiasYTipo(Long id_tipo_reserva, Date fecha1, Date fecha2);
+
+	public List<Dias> consultaRangoDias(Date fecha1, Date fecha2);
+	
 }

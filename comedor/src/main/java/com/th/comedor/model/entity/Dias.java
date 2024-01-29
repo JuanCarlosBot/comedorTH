@@ -34,8 +34,16 @@ public class Dias implements Serializable{
     private Date fecha;
     @Column
     private String estado;
-    
-    private String fechaFormateada;
+    @Column
+    private String fecha_formateada;
+    @Column
+    private int cantidad_reservas;
+    @Column
+    private String tipo;
+    @Column
+    private int cantidad_reservas_pendientes;
+    @Column
+    private int cantidad_reservas_servidos;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dias", fetch = FetchType.LAZY)

@@ -15,6 +15,55 @@
 			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;" onclick="abrirModal(this)"></a>
 		</div>
 	</div>
+
+
+	<div th:fragment="dias">
+        <div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+			<table id="example1" class="table table-bordered dt-responsive nowrap"
+				style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+				<thead>
+					<tr style="font-size: 12px;">
+						<th data-priority="1">FECHA</th>
+						<th data-priority="2">TIPO</th>
+						<th data-priority="3">PENDIENTES</th>
+						<th data-priority="3">SERVIDOS</th>
+						<th data-priority="3">TOTAL</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="d, i: ${dias}" style="font-size: 12px;">
+						<td>
+							<a th:href="@{'/verDetalleReserva/'+${d.id_dia}+'/'+${id_tipo_reserva}}" th:text="${d.fecha_formateada}"></a>
+						</td>
+						<td th:text="${d.tipo}"></td>
+						<td th:text="${d.cantidad_reservas_pendientes+' - Personas'}"></td>
+						<td th:text="${d.cantidad_reservas_servidos+' - Personas'}"></td>
+						<td th:text="${d.cantidad_reservas+' - Personas'}"></td>
+						<!-- Otros campos según sea necesario -->
+						<!--<td>
+							<a type="button" th:href="@{'/verDetalleReserva/'+${d.id_dia}}">
+								<span class="mdi mdi-pencil-box-outline"> ver detalle</span>
+							</a>
+						</td>-->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<script>
+			$(function () {
+			$("#example1").DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+				//, "colvis"
+			}).buttons().container().appendTo(
+				'#example1_wrapper .col-md-6:eq(0)');
+			
+		});
+		</script>
+	</div>
+	
 </body>
 
 </html>

@@ -68,9 +68,7 @@
 <body>
     
     <section class="slider d-flex align-items-center">
-        <!-- <img src="images/slider.jpg" class="img-fluid" alt="#"> -->
         <div class="container">
-            <a th:href="@{/seleccionBuscador}"></a>
             <div class="row d-flex justify-content-center">
                 <div class="col-md-12">
                     <div class="slider-title_box">
@@ -78,8 +76,12 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="slider-content_wrap">
-                                        <h1 style="font-size: 50px;">TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong></h1>
-                                        <h5>Sistema de reserva de desayuno, almuerzo y cena</h5>
+                                        <h1 style="font-size: 50px;">TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
+                                            
+                                        </h1>
+                                        <h3><span th:text="${#dates.format(new java.util.Date().getTime(), 'dd/MM/yyyy')}"></span>
+                                            <span style="color: rgb(14, 129, 47);">-</span>
+                                            <span id="tiempo">00 : 00 : 00</span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +166,7 @@
                                                 <input type="checkbox" th:value="${fsa.id_dia}" class="form-check-input"
                                                     name="id_dias">
                                                 <label th:for="${'checkbox' + fsa.id_dia}" class="form-check-label"
-                                                    th:text="${fsa.fechaFormateada}"></label>
+                                                    th:text="${fsa.fecha_formateada}"></label>
 
 
                                             </div>
@@ -181,6 +183,9 @@
                 </div>
 
             </div>
+        </div>
+        <div class="">
+            <h3 style="background-color: red;">hola</h3>
         </div>
     </section>
     
@@ -202,6 +207,27 @@
             };
         });
     </script>
+    <script type="text/javascript">
+		let html = document.getElementById("tiempo");
+	
+		setInterval(function() {
+		  tiempo = new Date();
+	
+		  horas = tiempo.getHours();
+		  minutos = tiempo.getMinutes();
+		  segundos = tiempo.getSeconds();
+	
+		  //evitar los 0 o numeros individuales
+		  if (horas < 10)
+			horas = "0" + horas;
+		  if (minutos < 10)
+			minutos = "0" + minutos;
+		  if (segundos < 10)
+			segundos = "0" + segundos;
+	
+		  html.innerHTML = horas + " : " + minutos + " : " + segundos;
+		}, 1000);
+	  </script>
 </body>
 
 </html>
