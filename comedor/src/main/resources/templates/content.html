@@ -6,19 +6,42 @@
 
 <body>
 	<div th:fragment="content1">
-        <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
-			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;" onclick="abrirModal(this)"></a>
+		<div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
+			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}"
+				th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;"
+				onclick="abrirModal(this)"></a>
 		</div>
 	</div>
 	<div th:fragment="content2">
-        <div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
-			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}" th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;" onclick="abrirModal(this)"></a>
+		<div th:each="p, iterStat : ${persona}" th:if="${iterStat.index < 5}">
+			<a href="#" th:text="${p.codigo+' '+p.ci+' '+p.nombre}"
+				th:attr="data-id=${p.id_persona}, data-nombre=${p.nombre}" style="color: beige; font-size: 20px;"
+				onclick="abrirModal(this)"></a>
+		</div>
+	</div>
+	<div th:fragment="fechas">
+		<div th:each="fsa : ${fechasSemanaActual}" class="form-check form-check-inline p-2"
+			style="border-radius: 10px; text-align: center; border: 2px; background-color: #3939bba5;">
+
+			<input type="checkbox" th:value="${fsa.id_dia}" class="form-check-input" name="id_dias" th:disabled="${reservados.contains(fsa)}" >
+			<label th:for="${'checkbox' + fsa.id_dia}" class="form-check-label"
+				th:text="${fsa.fecha_formateada}"></label>
+
+
+		</div>
+		<div >
+			Fechas reservadas:
+			<div class="row" style="text-align: center;">
+				<div class="p-1" th:each="d:${reservados}" style="border-radius: 10px; text-align: center; border: 2px; background-color: #39bb4fa5;">
+					<label th:text="${d.fecha_formateada}" class="form-check-label" style="text-align: center;">sin fechas</label> 
+				</div>
+			</div>
+			
 		</div>
 	</div>
 
-
 	<div th:fragment="dias">
-        <div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+		<div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
 			<table id="example1" class="table table-bordered dt-responsive nowrap"
 				style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 				<thead>
@@ -33,9 +56,10 @@
 				<tbody>
 					<tr th:each="d, i: ${dias}" style="font-size: 12px;">
 						<td>
-							<a th:href="@{'/verDetalleReserva/'+${d.id_dia}+'/'+${id_tipo_reserva}}" th:text="${d.fecha_formateada}"></a>
+							<a th:href="@{'/verDetalleReserva/'+${d.id_dia}+'/'+${id_tipo_reserva}}"
+								th:text="${d.fecha_formateada}"></a>
 							<a href="" th:attr="data-iddia=${d.id_dia}, data-idtiporeserva=${id_tipo_reserva}"
-   								onclick="abrirModal(event, this)">presionar</a>
+								onclick="abrirModal(event, this)">presionar</a>
 						</td>
 						<td th:text="${d.tipo}"></td>
 						<td th:text="${d.cantidad_reservas_pendientes+' - Personas'}"></td>
@@ -53,19 +77,19 @@
 		</div>
 		<script>
 			$(function () {
-			$("#example1").DataTable({
-				"responsive": true,
-				"lengthChange": false,
-				"autoWidth": false,
-				"buttons": ["copy", "csv", "excel", "pdf", "print"]
-				//, "colvis"
-			}).buttons().container().appendTo(
-				'#example1_wrapper .col-md-6:eq(0)');
-			
-		});
+				$("#example1").DataTable({
+					"responsive": true,
+					"lengthChange": false,
+					"autoWidth": false,
+					"buttons": ["copy", "csv", "excel", "pdf", "print"]
+					//, "colvis"
+				}).buttons().container().appendTo(
+					'#example1_wrapper .col-md-6:eq(0)');
+
+			});
 		</script>
 	</div>
-	
+
 </body>
 
 </html>

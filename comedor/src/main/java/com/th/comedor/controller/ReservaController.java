@@ -82,9 +82,53 @@ public class ReservaController {
         for (Dias dia : fechasSemanaActual) {
             dia.setFecha_formateada(sdf.format(dia.getFecha()));
         }
-        model.addAttribute("fechasSemanaActual", fechasSemanaActual);
+        //model.addAttribute("fechasSemanaActual", fechasSemanaActual);
         model.addAttribute("tipoReserva", tipoReserva);
         return "reserva/buscador";
+    }
+
+    /*@GetMapping("/tu/controlador/obtenerFechas")
+    @ResponseBody
+    public List<Dias> obtenerFechasSemanaActualPersona(@RequestParam Long idPersona) {
+        Persona persona = personaService.findOne(idPersona);
+        System.out.println(persona.getNombre());
+        // Lógica para obtener las fechas de la semana actual para la persona con el ID proporcionado
+        List<Dias> fechasSemanaActual = obtenerFechasSemanaActual();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MMM");
+        for (Dias dia : fechasSemanaActual) {
+            dia.setFecha_formateada(sdf.format(dia.getFecha()));
+        }
+        // Devolver la lista de fechas en formato JSON
+        return fechasSemanaActual;
+    }*/
+    @GetMapping("/tu/controlador/obtenerFechas")
+    public String obtenerFechasSemanaActualPersona(@RequestParam Long idPersona, @RequestParam Long idTipoReserva, ModelMap model) {
+        Persona persona = personaService.findOne(idPersona);
+        System.out.println(persona.getNombre());
+        TipoReserva tipoReserva = tipoReservaService.findOne(idTipoReserva);
+
+        // Lógica para obtener las fechas de la semana actual para la persona con el ID proporcionado
+        List<Dias> fechasSemanaActual = obtenerFechasSemanaActual();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE dd/MMM");
+        for (Dias dia : fechasSemanaActual) {
+            dia.setFecha_formateada(sdf.format(dia.getFecha()));
+        }
+        //fechas de semana actual sin restricciones
+        List<Dias> contDias = new ArrayList<>();
+        for (Dias dias : fechasSemanaActual) {
+            if (!dias.getReserva().isEmpty()) {
+                for (Reserva r : dias.getReserva()) {
+                    if (r.getPersona().getId_persona()==persona.getId_persona() && r.getTipo_reserva().getId_tipo_reserva()==tipoReserva.getId_tipo_reserva()) {
+                        dias.setFecha_formateada(sdf.format(dias.getFecha()));
+                        contDias.add(dias);
+                    }
+                }    
+            }
+              
+        }
+        model.addAttribute("fechasSemanaActual", fechasSemanaActual);
+        model.addAttribute("reservados", contDias);
+        return "content :: fechas";
     }
 
     private List<Dias> obtenerFechasSemanaActual() {
@@ -116,7 +160,7 @@ public class ReservaController {
     public String guardarReserva(RedirectAttributes redirectAttributes, 
     @RequestParam(value = "id_persona")Long id_persona, 
     @RequestParam(value = "id_tiporeserva")Long id_tiporeserva,
-    @RequestParam(value = "id_dias")Long[] id_dias, Model model) {
+    @RequestParam(name = "id_dias")Long[] id_dias, Model model) {
 
         TipoReserva tipoReserva = tipoReservaService.findOne(id_tiporeserva);
         Persona persona = personaService.findOne(id_persona);
@@ -126,23 +170,33 @@ public class ReservaController {
         System.out.println(tipoReserva.getNombre_tipo_reserva()+" "+persona.getNombre());
         Subvension subvension = subvensionService.findOne(1l);
         List<Dias> diasSemana=new ArrayList<>();
-        for (Long long1 : id_dias) {
-            Dias dias = diasService.findOne(long1);
-            diasSemana.add(dias);
+        if (id_dias.length!=0) {
+            for (Long long1 : id_dias) {
+                Dias dias = diasService.findOne(long1);
+                diasSemana.add(dias);
+            }
+        
+            for (Dias dias : diasSemana) {
+                Reserva reserva = new Reserva();
+                reserva.setFecha_reserva(new Date());
+                reserva.setEstado_reserva("A");
+                reserva.setPersona(persona);
+                reserva.setSubvension(subvension);
+                reserva.setDias(dias);
+                reserva.setEstados(estados);
+                reserva.setTipo_reserva(tipoReserva);
+                reservaService.save(reserva);
+    
+                System.out.println("fechas seleccionadas  "+dias.getFecha());
+            }    
+        }else{
+            redirectAttributes.addFlashAttribute("tipoReserva", tipoReserva);
+            redirectAttributes.addFlashAttribute("nombre", persona.getNombre());
+            redirectAttributes.addFlashAttribute("mensaje", "No selecionó fechas");
+            return "redirect:/buscadorPersona?idTipoReserva=" + id_tiporeserva;
         }
-        for (Dias dias : diasSemana) {
-            Reserva reserva = new Reserva();
-            reserva.setFecha_reserva(new Date());
-            reserva.setEstado_reserva("A");
-            reserva.setPersona(persona);
-            reserva.setSubvension(subvension);
-            reserva.setDias(dias);
-            reserva.setEstados(estados);
-            reserva.setTipo_reserva(tipoReserva);
-            reservaService.save(reserva);
 
-            System.out.println("fechas seleccionadas  "+dias.getFecha());
-        }
+        
         redirectAttributes.addFlashAttribute("tipoReserva", tipoReserva);
         redirectAttributes.addFlashAttribute("nombre", persona.getNombre());
         redirectAttributes.addFlashAttribute("mensaje", "Tu reserva fue completada con éxito");

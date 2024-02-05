@@ -24,8 +24,9 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .form-check-inline {
@@ -50,63 +51,77 @@
             margin-left: 5px;
             /* Ajusta el margen izquierdo para acercar el label al checkbox */
         }
-        .card.fondo-oscuro {
-    background-color: #39493ec4; /* Cambia este color según tus preferencias */
-    color: white; /* Cambia el color del texto según tus necesidades */
-    padding: 20px; /* Ajusta el espaciado interno según tus necesidades */
-}
 
-/* Ajusta el tamaño del texto si es necesario */
-.card.fondo-oscuro h1,
-.card.fondo-oscuro h5,
-.card.fondo-oscuro input {
-    font-size: 25px; /* Cambia el tamaño del texto según tus necesidades */
-}
+        .card.fondo-oscuro {
+            background-color: #39493ec4;
+            /* Cambia este color según tus preferencias */
+            color: white;
+            /* Cambia el color del texto según tus necesidades */
+            padding: 20px;
+            /* Ajusta el espaciado interno según tus necesidades */
+        }
+
+        /* Ajusta el tamaño del texto si es necesario */
+        .card.fondo-oscuro h1,
+        .card.fondo-oscuro h5,
+        .card.fondo-oscuro input {
+            font-size: 25px;
+            /* Cambia el tamaño del texto según tus necesidades */
+        }
     </style>
 </head>
 
 <body>
-    
+
     <section class="slider d-flex align-items-center">
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-12">
                     <div class="slider-title_box">
+                        <div class="">
+                            <a th:href="@{/seleccionBuscador}" style="font-size: 40px;"><span
+                                    class="mdi mdi-chevron-left-circle"></span></a>
+                        </div>
                         <div class="card fondo-oscuro">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="slider-content_wrap">
-                                        <h1 style="font-size: 50px;">TAHUAMANU S.A. - <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
-                                            
+                                        <h1 style="font-size: 50px;">TAHUAMANU S.A. -
+                                            <strong>[[${tipoReserva.nombre_tipo_reserva}]]</strong>
+
                                         </h1>
-                                        <h3><span th:text="${#dates.format(new java.util.Date().getTime(), 'dd/MM/yyyy')}"></span>
+                                        <h3><span
+                                                th:text="${#dates.format(new java.util.Date().getTime(), 'dd/MM/yyyy')}"></span>
                                             <span style="color: rgb(14, 129, 47);">-</span>
-                                            <span id="tiempo">00 : 00 : 00</span></h3>
+                                            <span id="tiempo">00 : 00 : 00</span>
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-10">
-                                    
+
                                     <input type="text" placeholder="CODIGO PERSONA" class="btn-group1" id="textoCodigo"
                                         onkeyup="buscarPersonaCodigo()">
                                     <input class="btn-group1" type="text" placeholder="CEDULA DE IDENTIDAD" id="texto"
                                         onkeyup="buscarPersonaCi()">
-                                    <div class="slider-link" id="replace_div"> <h2>Aqui se mostraran tus datos</h2> </div>
+                                    <div class="slider-link" id="replace_div">
+                                        <h2>Aqui se mostraran tus datos</h2>
+                                    </div>
                                     </br></br>
-                                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
-                                                role="alert" th:if="${mensaje != null}">
-                                                <h4 class="alert-body" th:inline="text">
-                                                    <strong th:text="${nombre}"></strong>
-                                                    [[${mensaje}]]
-                                                </h4>
-                                                <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                                        th:if="${mensaje != null}">
+                                        <h4 class="alert-body" th:inline="text">
+                                            <strong th:text="${nombre}"></strong>
+                                            [[${mensaje}]]
+                                        </h4>
+                                        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>-->
-                                            </div>
-    
+                                    </div>
+
                                     <script>
-                                        
+
                                         function buscarPersonaCi() {
                                             getContent();
                                             $('#texto').change(getContent);
@@ -123,7 +138,7 @@
                                                 $('#replace_div').load(url);
                                             }
                                         }
-                                        function abrirModal(enlace) {
+                                        /*function abrirModal(enlace) {
                                             var idPersona = enlace.getAttribute("data-id");
                                             var nombrePersona = enlace.getAttribute("data-nombre");
     
@@ -131,13 +146,13 @@
                                             document.getElementById("personaNombre").innerText = nombrePersona;
     
                                             $('#myModal').modal('show');
-                                        }
+                                        }*/
                                     </script>
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -146,6 +161,8 @@
                         <div class="modal-content">
                             <form th:action="@{/guardarReserva}" method="post">
                                 <input type="hidden" class="form-control" id="personaId" name="id_persona">
+                                <input type="hidden" th:value="${tipoReserva.id_tipo_reserva}" name="id_tiporeserva"
+                                    id="id_tiporeserva">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Datos</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -158,24 +175,17 @@
                                     </div>
                                     <div class="form-group" style="font-size: 20px; border-radius: 10px;">
                                         <label class="col-form-label">Fechas de la semana actual:</label></br>
-                                        <div class="checkbox-container">
-                                            <input type="hidden" th:value="${tipoReserva.id_tipo_reserva}" name="id_tiporeserva" id="id_tiporeserva">
-                                            <div th:each="fsa : ${fechasSemanaActual}"
-                                                class="form-check form-check-inline" style="text-align: center;">
+                                        <div id="cargarFechas" style="font-size: 20px; border-radius: 10px; text-align: center;">
 
-                                                <input type="checkbox" th:value="${fsa.id_dia}" class="form-check-input"
-                                                    name="id_dias">
-                                                <label th:for="${'checkbox' + fsa.id_dia}" class="form-check-label"
-                                                    th:text="${fsa.fecha_formateada}"></label>
-
-
-                                            </div>
                                         </div>
+                                        <!--<div id="fechasContainer"
+                                            style="font-size: 20px; border-radius: 10px; text-align: center;"></div>-->
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Reservar</button>
+                                    <button type="submit" class="btn btn-primary" onclick="return validarFormulario()">Reservar</button>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -184,14 +194,83 @@
 
             </div>
         </div>
-        <div class="">
-            <h3 style="background-color: red;">hola</h3>
-        </div>
+
     </section>
-    
+
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        function validarFormulario() {
+            // Obtener todos los checkboxes con el nombre 'id_dias'
+            var checkboxes = document.querySelectorAll('input[name="id_dias"]');
+            var seleccionados = false;
+
+            // Verificar si al menos un checkbox está seleccionado
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    seleccionados = true;
+                }
+            });
+
+            // Mostrar mensaje de alerta si no hay fechas seleccionadas
+            if (!seleccionados) {
+                alert("Selecciona al menos una fecha o cierre la ventana.");
+                return false; // Evitar que el formulario se envíe si no hay ninguna fecha seleccionada
+            }
+
+            // Permitir el envío del formulario si hay al menos una fecha seleccionada
+            return true;
+        }
+    </script>
+    <script>
+        function abrirModal(enlace) {
+            var idPersona = enlace.getAttribute("data-id");
+            var nombrePersona = enlace.getAttribute("data-nombre");
+            var idTipoReserva = document.getElementById("id_tiporeserva").value;
+            document.getElementById("personaId").value = idPersona;
+            document.getElementById("personaNombre").innerText = nombrePersona;
+            //alert(idTipoReserva);
+            getContent();
+            $('#textoCodigo').change(getContent);
+            function getContent() {
+                var url = "/tu/controlador/obtenerFechas?idPersona=" + idPersona + "&idTipoReserva=" + idTipoReserva;
+                $('#cargarFechas').load(url);
+            }
+            $('#myModal').modal('show');
+        }
+        /*function abrirModal(enlace) {
+            var idPersona = enlace.getAttribute("data-id");
+            var nombrePersona = enlace.getAttribute("data-nombre");
+
+            document.getElementById("personaId").value = idPersona;
+            document.getElementById("personaNombre").innerText = nombrePersona;
+
+            // Realizar la petición Ajax para obtener las fechas
+            $.ajax({
+                type: 'GET',
+                url: '/tu/controlador/obtenerFechas?idPersona=' + idPersona,
+                success: function (fechas) {
+                    // Limpiar el contenedor de fechas
+                    $('#fechasContainer').empty();
+
+                    // Recorrer la lista de fechas y agregarlas al contenedor
+                    $.each(fechas, function (index, fsa) {
+                        var checkbox = '<input type="checkbox" value="' + fsa.id_dia + '" class="form-check-input" name="id_dias" id="checkbox' + fsa.id_dia + '">';
+                        var label = '<label for="checkbox' + fsa.id_dia + '" class="form-check-label" style="margin-left: 5px;">' + fsa.fecha_formateada + '</label>';
+                        $('#fechasContainer').append('<div class="form-check form-check-inline p-2" style="border-radius: 10px; align-item: center; border: 2px; background-color: #3fb63fa5;">' + checkbox + label + '</div>');
+                    });
+
+                    // Abrir el modal
+                    $('#myModal').modal('show');
+                },
+                error: function (error) {
+                    console.error('Error al obtener las fechas: ', error);
+                }
+            });
+        }
+    */
+    </script>
     <script>
         $(window).scroll(function () {
             // 100 = The point you would like to fade the nav in.
@@ -208,26 +287,26 @@
         });
     </script>
     <script type="text/javascript">
-		let html = document.getElementById("tiempo");
-	
-		setInterval(function() {
-		  tiempo = new Date();
-	
-		  horas = tiempo.getHours();
-		  minutos = tiempo.getMinutes();
-		  segundos = tiempo.getSeconds();
-	
-		  //evitar los 0 o numeros individuales
-		  if (horas < 10)
-			horas = "0" + horas;
-		  if (minutos < 10)
-			minutos = "0" + minutos;
-		  if (segundos < 10)
-			segundos = "0" + segundos;
-	
-		  html.innerHTML = horas + " : " + minutos + " : " + segundos;
-		}, 1000);
-	  </script>
+        let html = document.getElementById("tiempo");
+
+        setInterval(function () {
+            tiempo = new Date();
+
+            horas = tiempo.getHours();
+            minutos = tiempo.getMinutes();
+            segundos = tiempo.getSeconds();
+
+            //evitar los 0 o numeros individuales
+            if (horas < 10)
+                horas = "0" + horas;
+            if (minutos < 10)
+                minutos = "0" + minutos;
+            if (segundos < 10)
+                segundos = "0" + segundos;
+
+            html.innerHTML = horas + " : " + minutos + " : " + segundos;
+        }, 1000);
+    </script>
 </body>
 
 </html>
