@@ -5,19 +5,20 @@
                 Servicios hoy
             </a>
             <div class="dropdown-menu" aria-labelledby="serviciosDropdown">
-                <a class="dropdown-item" href="servicio1.html">Desayuno Actual</a>
-                <a class="dropdown-item" href="servicio2.html">Almuerzo Actual</a>
-                <a class="dropdown-item" href="servicio2.html">Cena Actual</a>
+                <a class="dropdown-item" th:href="@{/desayunoHoy}">Desayuno Actual</a>
+                <a class="dropdown-item" th:href="@{/almuerzoHoy}">Almuerzo Actual</a>
+                <a class="dropdown-item" th:href="@{cenaHoy}">Cena Actual</a>
                 <!-- Puedes agregar más elementos según sea necesario -->
             </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="contactoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Gestion de datos
+                Gestionar
             </a>
             <div class="dropdown-menu" aria-labelledby="contactoDropdown">
-                <a class="dropdown-item" th:href="@{/personas}">Lista de personas</a>
-                <a class="dropdown-item" th:href="@{/consultas}">Consultas de reservas</a>
+                <a class="dropdown-item" th:href="@{/NuevaReserva}">Nueva Reserva</a>
+                <a class="dropdown-item" th:href="@{/consultas}">Consulta de reservas</a>
+                <a class="dropdown-item" th:href="@{/personas}">Todas las personas</a>
                 <!-- Puedes agregar más elementos según sea necesario -->
             </div>
         </li>

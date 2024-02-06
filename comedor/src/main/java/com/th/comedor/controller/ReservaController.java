@@ -261,6 +261,27 @@ public class ReservaController {
     }
     
 
+    //nueva reserva modo admin
+    @GetMapping("/NuevaReservaAdmin")
+    public String nuevaReservaAdmin(Model model) {
+        model.addAttribute("reserva", new Reserva());
+        model.addAttribute("tipoReservas", tipoReservaService.findAll());
+        model.addAttribute("dias", diasService.findAll());
+        model.addAttribute("subvensiones", subvensionService.findAll());
+        model.addAttribute("estados", estadoService.findAll());
+
+        model.addAttribute("personas", personaService.findAll());
+        return "reserva/nueva_reserva";
+    }
+
+
+
+
+
+
+
+
+
 
     //consultas
     @GetMapping("/consultas")

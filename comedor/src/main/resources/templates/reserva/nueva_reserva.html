@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TAHUAMANU S.A. </title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+		integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<!-- Estilos de DataTables CSS -->
+	<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css">
+
+        <!--botones para tabla-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+	<style>
+		.prin {
+			background-image: url(../images/sliderr.jpg);
+			/* Reemplaza 'ruta-de-tu-imagen.jpg' con la ruta real de tu imagen */
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			min-height: 100vh;
+			color: white;
+			/* Cambia el color del texto según tus necesidades para que sea legible en la imagen */
+		}
+        
+        .bg-verde-oscuro {
+            background-color: #006400; /* Cambia el código de color según tu preferencia */
+        }
+		/* Estilos personalizados van aquí */
+	</style>
+</head>
+
+<body class="bg-light text-dark tracking-wider leading-normal prin">
+    <nav th:replace="~{layout/menu :: menu}"></nav>
+	<!-- Contenedor principal -->
+	<div class="container-fluid">
+
+		<div class="mt-2" style="text-align: center; background-color: rgba(238, 241, 240, 0.89); border-radius: 10px;">
+			<h1 class="flex items-center font-sans font-bold break-normal px-2 py-8 text-xl md:text-2xl"
+				style="color: rgb(14, 129, 47);">
+				TAHUAMANU S.A. - 
+			</h1>
+		</div>
+		<div class="row mx-2 mt-2">
+
+			<!-- Div central de 3 columnas para los números -->
+			<div class="col-md-5">
+				<!-- Contenido de los números -->
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)"
+                            role="alert" th:if="${mensaje != null}">
+                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="get" id="miFormulario">
+                            
+                            <h4 class="header-title">FORMULARIO</h4>
+                            <div class="form-group row">
+                                <div class="form-group col-md-7">
+                                    <label for="seccion">Personas:</label>
+                                    <select class="form-control" th:field="${reserva.persona}" required>
+                                        <option value="" selected>Seleccionar...</option>
+                                        <option th:each="p:${personas}"
+                                            th:value="${p.id_persona}"
+                                            th:text="${p.nombre}">-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="codigo">Tipo:</label>
+                                    <select class="form-control" th:field="${reserva.tipo_reserva}" required>
+                                        <option value="" selected>Seleccionar...</option>
+                                        <option th:each="tp:${tipoReservas}"
+                                            th:value="${tp.id_tipo_reserva}"
+                                            th:text="${tp.nombre_tipo_reserva}">-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="codigo">Dias:</label>
+                                    <select class="form-control" th:field="${reserva.dias}" required>
+                                        <option th:each="d:${dias}"
+                                            th:value="${d.id_dia}"
+                                            th:text="${d.fecha_formateada}">-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="codigo">Subvension:</label>
+                                    <select class="form-control" th:field="${reserva.Subvension}" required>
+                                        <option value="" selected>Seleccionar...</option>
+                                        <option th:each="s:${subvensiones}"
+                                            th:value="${s.id_subvension}"
+                                            th:text="${s.porcentaje}">-</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="codigo">Estado:</label>
+                                    <select class="form-control" th:field="${reserva.estados}" required>
+                                        <option th:each="e:${estados}"
+                                            th:value="${e.id_estado}"
+                                            th:text="${e.nombre_estado}">-</option>
+                                    </select>
+                                </div>
+                                <!--<div class="form-group col-md-4">
+                                    <label for="codigo">Cantidad:</label>
+                                    <input type="number" min="1" value="1" th:field="${reserva.cantidad}" required>
+                                </div>-->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary mb-2">Consultar</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+			</div>
+
+			<!-- Div más amplio de 9 columnas para la tabla -->
+			<div class="col-md-7 mx-auto">
+				<!-- Contenido de la tabla -->
+                <div id='recipients'>
+                    <div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+                        <table class="table table-bordered dt-responsive nowrap"
+                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr style="font-size: 12px;">
+                                    <th data-priority="1">FECHA</th>
+                                    <th data-priority="2">TIPO</th>
+                                    <th data-priority="3">PENDIENTES</th>
+                                    <th data-priority="3">SERVIDOS</th>
+                                    <th data-priority="3">TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  style="font-size: 12px; text-align: center;">
+                                    <td colspan="5">
+                                        Aquí se mostrará los datos de la consulta.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    
+				<script>
+					
+                    function redirigirDetalle(enlace) {
+                        try {
+                        var id_dia = enlace.getAttribute("data-idDia");
+                        var id_tipo_reserva = enlace.getAttribute("data-idTReserva");
+                        
+                        // Construir la URL con los parámetros
+                        alert(id_dia + ' ' + id_tipo_reserva);
+                        var url = "/verDetalleReserva?idDia=" + id_dia + "&idTipoReserva=" + id_tipo_reserva;
+
+                        // Redirigir a la nueva URL
+                        window.location.href = url;
+                    } catch (error) {
+                        console.error("Error en redirigirDetalle:", error);
+                    }
+                    }
+				</script>
+				
+				<div class="modal fade" id="myModalDetalle" tabindex="-1" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-xl">
+						<div class="modal-content">
+							<div class="p-3 mt-6 lg:mt-0 rounded shadow bg-white">
+								<table id="example2" class="table table-bordered dt-responsive nowrap"
+									style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+									<thead>
+										<tr>
+											<th data-priority="1">#</th>
+											<th data-priority="2">NOMBRE COMPLETO</th>
+											<th data-priority="3">CODIGO</th>
+											<th data-priority="4">CI</th>
+											<th data-priority="5">ESTADO</th>
+											<th data-priority="6">SECCION</th>
+											<th data-priority="7">TIPO</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr style="text-align: center;">
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /Filas -->
+
+	</div>
+	
+	<!-- /Contenedor principal -->
+
+	<!-- Scripts de Bootstrap y jQuery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#miFormulario').submit(function (e) {
+                e.preventDefault(); // Evitar la recarga de la página al enviar el formulario
+    
+                // Obtener los valores de los elementos
+                var fecha1 = $('#fecha1').val();
+                var fecha2 = $('#fecha2').val();
+                var tipo = $('#tipo').val();
+    
+                // Mostrar los valores en una alerta (puedes quitar esto después de verificar que funciona)
+                console.log("Fecha1: " + fecha1 + ", Fecha2: " + fecha2 + ", Tipo: " + tipo);
+    
+                // Verificar que los valores no estén vacíos o sean nulos antes de realizar la solicitud
+                if (fecha1 && fecha2 && tipo) {
+                    // Construir la URL con los valores
+                    var url = "/consultas/" + fecha1 + "/" + fecha2 + "/" + tipo;
+    
+                    // Realizar la solicitud AJAX
+                    $('#recipients').load(url);
+                } else {
+                    // Manejar el caso donde alguno de los valores es nulo o vacío
+                    console.log('Asegúrate de completar todos los campos antes de consultar.');
+                }
+            });
+        });
+    </script>
+	<script>
+		function abrirModal(event, enlace) {
+			event.preventDefault();
+			console.log("Función abrirModal llamada");
+			var id_dia = enlace.getAttribute("data-iddia");
+			var id_tipo_reserva = enlace.getAttribute("data-idtiporeserva");
+			//alert(id_dia+' '+id_tipo_reserva);
+			// Enviar los datos al controlador utilizando AJAX
+			$.ajax({
+				type: "POST",
+				url: "/generarDetalleConsulta",
+				data: {
+					id_dia: id_dia,
+					id_tipo_reserva: id_tipo_reserva
+				},
+				success: function (reservas) {
+					$("#example2 tbody").empty();
+					for (var i = 0; i < reservas.length; i++) {
+						var reserva = reservas[i];
+						var fila = "<tr>" +
+							"<td>" + (i + 1) + "</td>" +
+							"<td>" + reserva.persona.nombre + "</td>" +
+							"<td>" + reserva.persona.codigo + "</td>" +
+							"<td>" + reserva.persona.ci + "</td>" +
+							"<td>" + reserva.estados.nombre_estado + "</td>" +
+							"<td>" + reserva.persona.seccion.numero_seccion + "</td>" +
+							"<td>" + reserva.tipo_reserva.nombre_tipo_reserva + "</td>" +
+							"</tr>";
+
+						// Agregar la fila a la tabla
+						$("#example2 tbody").append(fila);
+					}
+
+					// Mostrar el modal usando jQuery
+					$("#myModalDetalle").modal("show");
+				},
+				error: function (error) {
+					console.error(error);
+				}
+			});
+			
+		}
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<!-- Scripts de DataTables -->
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+
+    <!--para botones en la tabla-->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+	<script>
+		$(function () {
+			$("#example1").DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+				//, "colvis"
+			}).buttons().container().appendTo(
+				'#example1_wrapper .col-md-6:eq(0)');
+			$('#example2').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example2_wrapper .col-md-6:eq(0)');
+			$('#example3').DataTable({
+				"responsive": true,
+				"lengthChange": false,
+				"autoWidth": false,
+				"buttons": ["copy", "csv", "excel", "pdf", "print"]
+			}).buttons().container().appendTo(
+				'#example3_wrapper .col-md-6:eq(0)');
+		});
+	</script>
+
+</body>
+
+</html>
