@@ -273,7 +273,14 @@ public class ReservaController {
         model.addAttribute("personas", personaService.findAll());
         return "reserva/nueva_reserva";
     }
-
+    @GetMapping("/obtenerDatosPersona")
+    public Persona obtenerDatosPersona(@RequestParam("idPersona") Long idPersona) {
+        // Aquí deberías realizar la lógica para obtener los datos de la persona con el ID proporcionado
+        // Supongamos que tienes un servicio de Persona que te devuelve los datos de la persona según su ID
+        Persona persona = personaService.findOne(idPersona);
+        System.out.println(persona.getNombre()+" '''''''''''''''''''''''''''''''''''''''''''''''''''lllllllllllll");
+        return persona;
+    }
 
 
 
